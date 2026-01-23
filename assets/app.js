@@ -8,4 +8,25 @@ import './stimulus_bootstrap.js';
 import './styles/app.css';
 import 'flowbite';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const storedTheme = localStorage.getItem('color-theme');
+const isDarkTheme = storedTheme === 'dark' || (!storedTheme && prefersDark);
+
+if (isDarkTheme) {
+    document.documentElement.classList.add('dark');
+    themeToggleLightIcon?.classList.remove('hidden');
+} else {
+    document.documentElement.classList.remove('dark');
+    themeToggleDarkIcon?.classList.remove('hidden');
+}
+
+themeToggleBtn?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+    themeToggleDarkIcon?.classList.toggle('hidden', isDark);
+    themeToggleLightIcon?.classList.toggle('hidden', !isDark);
+});
