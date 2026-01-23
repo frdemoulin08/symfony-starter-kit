@@ -55,3 +55,7 @@ npm run release
 
 Note : l’exécution locale fonctionne uniquement si ton token GitHub est configuré
 et a les permissions nécessaires.
+
+## TODO (sécurité)
+
+- Refaire un audit `npm audit` avant la livraison de fin février et réévaluer les dépendances `@semantic-release/*` si des correctifs sont publiés.
