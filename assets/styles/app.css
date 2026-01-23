@@ -49,10 +49,14 @@
 ============================================================================= */
 
 .dark {
-    --color-neutral-primary-soft: oklch(0.13 0.028 261.692);
-    --color-neutral-primary: oklch(0.21 0.034 264.665);
+    --color-neutral-primary-soft: oklch(0.21 0.034 264.665);
+    --color-neutral-primary: oklch(0.13 0.028 261.692);
     --color-neutral-primary-medium: oklch(0.278 0.033 256.848);
     --color-neutral-primary-strong: oklch(0.373 0.034 259.733);
+    --color-neutral-secondary-soft: oklch(0.21 0.034 264.665);
+    --color-neutral-secondary-medium: oklch(0.278 0.033 256.848);
+    --color-neutral-tertiary-soft: oklch(0.278 0.033 256.848);
+    --color-neutral-tertiary-medium: oklch(0.373 0.034 259.733);
 
     --color-border-light: oklch(0.278 0.033 256.848);
 
