@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 @import "flowbite/src/themes/default";
+@import "tabulator-tables/dist/css/tabulator.min.css";
 
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
@@ -23,10 +24,15 @@
     --color-accent-soft: oklch(0.9731 0.0220 80.69);
 
     /* ===== NEUTRES ===== */
-    --color-neutral-primary-soft: oklch(0.9850 0.0082 91.48);
-    --color-neutral-primary: oklch(0.9823 0.0069 88.64);
-    --color-neutral-primary-medium: oklch(0.9675 0.0139 88.68);
-    --color-neutral-primary-strong: oklch(0.9396 0.0219 92.51);
+    --color-neutral-primary-soft: oklch(0.985 0.002 247.839);
+    --color-neutral-primary: oklch(0.967 0.003 264.542);
+    --color-neutral-primary-medium: oklch(0.928 0.006 264.531);
+    --color-neutral-primary-strong: oklch(0.872 0.01 258.338);
+
+    --color-neutral-secondary-soft: oklch(0.9823 0.0069 88.64);
+    --color-neutral-secondary-medium: oklch(0.9675 0.0139 88.68);
+    --color-neutral-tertiary-soft: oklch(0.9850 0.0082 91.48);
+    --color-neutral-tertiary-medium: oklch(0.9675 0.0139 88.68);
 
     --color-border-light: oklch(0.9429 0.0206 91.59);
 
@@ -36,9 +42,9 @@
     --color-heading: oklch(0.21 0.034 264.665);
 
     /* ===== SURFACES ===== */
-    --color-default: oklch(0.9823 0.0069 88.64);
-    --color-default-medium: oklch(0.9675 0.0139 88.68);
-    --color-default-strong: oklch(0.9396 0.0219 92.51);
+    --color-default: oklch(0.928 0.03 92.2);
+    --color-default-medium: oklch(0.905 0.035 91.5);
+    --color-default-strong: oklch(0.88 0.04 90.5);
 
     /* ===== TEXTE BRAND – light ===== */
     --color-fg-brand: oklch(0.2827 0.0487 190.44);
@@ -58,7 +64,7 @@
     --color-neutral-tertiary-soft: oklch(0.278 0.033 256.848);
     --color-neutral-tertiary-medium: oklch(0.373 0.034 259.733);
 
-    --color-border-light: oklch(0.278 0.033 256.848);
+    --color-border-light: oklch(0.42 0.035 258.5);
 
     --color-body: oklch(0.707 0.022 261.325);
     --color-body-subtle: oklch(0.551 0.027 264.364);
@@ -131,4 +137,154 @@
         height: 1.5rem;
         width: 1.5rem;
     }
+}
+
+/* =============================================================================
+   TABULATOR (THEME FLOWBITE)
+============================================================================= */
+
+.tabulator {
+    background-color: var(--color-neutral-primary-soft);
+    color: var(--color-body);
+    border: 1px solid var(--color-default-medium);
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+    overflow: hidden;
+}
+
+.tabulator .tabulator-header {
+    background-color: var(--color-neutral-primary-soft);
+    border-bottom: 1px solid var(--color-default-medium);
+    color: var(--color-heading);
+}
+
+.tabulator .tabulator-header .tabulator-col {
+    background-color: transparent;
+    border-right: 1px solid var(--color-default);
+}
+
+.tabulator .tabulator-header .tabulator-col:last-child {
+    border-right: 0;
+}
+
+.tabulator .tabulator-header .tabulator-col-content {
+    padding: 0.9rem 1rem;
+    font-weight: 600;
+}
+
+.tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
+    width: 100%;
+    border: 1px solid var(--color-default-medium);
+    border-radius: 0.5rem;
+    background-color: var(--color-neutral-primary);
+    color: var(--color-body);
+    padding: 0.35rem 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.tabulator .tabulator-header .tabulator-col .tabulator-header-filter input:focus {
+    outline: none;
+    border-color: var(--color-brand-medium);
+    box-shadow: 0 0 0 2px rgb(16 185 129 / 0.2);
+}
+
+.tabulator .tabulator-row {
+    background-color: var(--color-neutral-primary-soft);
+    border-bottom: 1px solid var(--color-default);
+}
+
+.tabulator .tabulator-row:nth-child(even) {
+    background-color: var(--color-neutral-primary);
+}
+
+.tabulator .tabulator-row:hover {
+    background-color: var(--color-neutral-secondary-soft);
+}
+
+.tabulator .tabulator-cell {
+    padding: 0.9rem 1rem;
+    border-right: 1px solid var(--color-default);
+}
+
+.tabulator .tabulator-cell:last-child {
+    border-right: 0;
+}
+
+.tabulator .tabulator-footer {
+    border-top: 1px solid var(--color-default-medium);
+    background-color: var(--color-neutral-primary-soft);
+}
+
+.tabulator .tabulator-footer .tabulator-page {
+    border: 1px solid var(--color-default);
+    border-radius: 0.5rem;
+    background-color: var(--color-neutral-primary-soft);
+    color: var(--color-body);
+    padding: 0.35rem 0.7rem;
+    margin: 0 0.15rem;
+}
+
+.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--color-neutral-secondary-medium);
+    color: var(--color-heading);
+    font-weight: 600;
+}
+
+.tabulator .tabulator-placeholder {
+    padding: 1.5rem;
+    color: var(--color-body-subtle);
+}
+
+.dark .tabulator {
+    background-color: var(--color-neutral-primary-soft);
+    border-color: var(--color-default);
+}
+
+.dark .tabulator .tabulator-header {
+    background-color: var(--color-neutral-primary-soft);
+    border-bottom-color: var(--color-default);
+}
+
+.dark .tabulator .tabulator-header .tabulator-col {
+    border-right-color: var(--color-default);
+}
+
+.dark .tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
+    background-color: var(--color-neutral-primary);
+    border-color: var(--color-default);
+    color: var(--color-body);
+}
+
+.dark .tabulator .tabulator-row {
+    background-color: var(--color-neutral-primary);
+    border-bottom-color: var(--color-default);
+}
+
+.dark .tabulator .tabulator-row:nth-child(even) {
+    background-color: var(--color-neutral-primary-soft);
+}
+
+.dark .tabulator .tabulator-row:hover {
+    background-color: var(--color-neutral-secondary-medium);
+}
+
+.dark .tabulator .tabulator-cell {
+    border-right-color: var(--color-default);
+}
+
+.dark .tabulator .tabulator-footer {
+    background-color: var(--color-neutral-primary-soft);
+    border-top-color: var(--color-default);
+}
+
+.dark .tabulator .tabulator-footer .tabulator-page {
+    background-color: var(--color-neutral-primary);
+    border-color: var(--color-default);
+    color: var(--color-body);
+}
+
+.dark .tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--color-neutral-secondary-medium);
+    color: var(--color-heading);
 }

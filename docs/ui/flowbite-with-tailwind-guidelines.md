@@ -220,7 +220,7 @@ En adoptant cette approche :
 - les styles sont **clairs, tokenisés, IA-friendly**,  
 - les conflits CSS sont fortement réduits,  
 - le thème devient **simple à maintenir et étendre**,  
-- tous les composants (maison, Flowbite, Tom Select, DataTables) restent cohérents,  
+- tous les composants (maison, Flowbite, Tom Select, Tabulator) restent cohérents,  
 - l’évolution du design (OKLCH, tokens dynamiques) est facilitée.
 
 ---
