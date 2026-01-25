@@ -42,6 +42,21 @@
                     </ul>
                 </div>
                 <div>
+                    <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand">Administration</p>
+                    <ul class="space-y-0">
+                        <li>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'log_users' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_log_users_index') }}">
+                                <span>Journaux de connexion</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'users' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_users_index') }}">
+                                <span>Utilisateurs</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
                     <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand">Paramétrage</p>
                     <ul class="space-y-0">
                         <li>
