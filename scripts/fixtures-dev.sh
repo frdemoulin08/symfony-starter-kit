@@ -7,8 +7,10 @@ if [ "$APP_ENV" != "dev" ]; then
   exit 1
 fi
 
-echo "${PURPLE}#### DROP DATABASE SCHEMA ####${NC}"
-php -d memory_limit=-1 bin/console doctrine:schema:drop --force --no-interaction
+echo "${PURPLE}#### DROP DATABASE ####${NC}"
+php -d memory_limit=-1 bin/console doctrine:database:drop --force --if-exists --no-interaction
+echo "${PURPLE}#### CREATE DATABASE ####${NC}"
+php -d memory_limit=-1 bin/console doctrine:database:create --no-interaction
 echo "${PURPLE}#### RESET MIGRATIONS ####${NC}"
 php -d memory_limit=-1 bin/console doctrine:migrations:version --delete --all --no-interaction
 echo "${PURPLE}#### EXECUTE MIGRATIONS ####${NC}"

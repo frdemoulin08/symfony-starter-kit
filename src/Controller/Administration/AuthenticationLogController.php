@@ -7,11 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/administration', name: 'app_admin_')]
-class LogUserController extends AbstractController
+class AuthenticationLogController extends AbstractController
 {
-    #[Route('/log-users', name: 'log_users_index')]
+    #[Route('/authentication-logs', name: 'authentication_logs_index')]
     public function index(): Response
     {
-        return $this->render('admin/log_users/index.html.twig');
+        return $this->render('admin/authentication_logs/index.html.twig');
     }
 }

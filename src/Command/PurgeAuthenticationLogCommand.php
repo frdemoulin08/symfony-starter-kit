@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Repository\LogUserRepository;
+use App\Repository\AuthenticationLogRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,13 +11,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:log-user:purge',
-    description: 'Purge les journaux de connexion (LogUser) au-delà de la durée de conservation.',
+    name: 'app:auth-log:purge',
+    description: 'Purge les journaux de connexion (AuthenticationLog) au-delà de la durée de conservation.',
 )]
-class PurgeLogUserCommand extends Command
+class PurgeAuthenticationLogCommand extends Command
 {
     public function __construct(
-        private readonly LogUserRepository $logUserRepository,
+        private readonly AuthenticationLogRepository $authenticationLogRepository,
     ) {
         parent::__construct();
     }
@@ -47,7 +47,7 @@ class PurgeLogUserCommand extends Command
             return Command::SUCCESS;
         }
 
-        $deleted = $this->logUserRepository->purgeOlderThan($cutoff);
+        $deleted = $this->authenticationLogRepository->purgeOlderThan($cutoff);
         $io->success(sprintf('%d entrées supprimées (antérieures à %s).', $deleted, $cutoff->format('Y-m-d H:i:s')));
 
         return Command::SUCCESS;

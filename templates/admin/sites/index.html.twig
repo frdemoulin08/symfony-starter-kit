@@ -11,28 +11,78 @@
             <h1 class="mt-3 text-3xl font-semibold text-heading">Sites</h1>
             <p class="mt-2 max-w-2xl text-sm text-body">Liste des sites gérés par le SPSL (Bairon, Vieilles Forges, Maison des Sports...).</p>
         </div>
-        <div class="flex flex-wrap gap-3">
-            <button class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                Ajouter un site
-            </button>
-        </div>
     </div>
 
     <section class="rounded-2xl border border-default bg-neutral-primary-soft p-5 shadow-xs">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <div>
-                <p class="text-sm font-semibold text-heading">Liste des sites</p>
-                <p class="mt-1 text-sm text-body">Tri, pagination et recherche seront activés à la création de l'entité.</p>
-            </div>
+            <form class="flex w-full flex-1 items-center gap-3 md:w-auto" method="get" action="{{ path('app_admin_sites_index') }}" data-table-form data-table-target="sites">
+                <label class="sr-only" for="sites-search">Rechercher</label>
+                <div class="relative w-full md:min-w-[280px]">
+                    <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
+                        <svg class="h-4 w-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input id="sites-search"
+                           class="block w-full rounded-base border border-default bg-neutral-primary px-3 py-2 ps-9 text-sm text-heading placeholder:text-body"
+                           type="search"
+                           name="filter[q]"
+                           value="{{ params.filters.q ?? '' }}"
+                           placeholder="Rechercher un site ou une commune">
+                </div>
+                <input type="hidden" name="sort" value="{{ params.sort }}">
+                <input type="hidden" name="direction" value="{{ params.direction }}">
+            </form>
             <div class="flex flex-wrap gap-2">
-                <button class="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary-soft shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none">
-                    Exporter CSV
-                </button>
-                <button class="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary-soft shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none">
-                    Exporter PDF
-                </button>
+                {{ include('components/_button.html.twig', {
+                    label: 'Ajouter un site',
+                    variant: 'primary',
+                    href: '#',
+                    size: 'sm',
+                    extra_class: 'flex items-center justify-center',
+                    icon: '<svg class=\"mr-2 h-3.5 w-3.5\" fill=\"currentColor\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z\" /></svg>'
+                }) }}
+                {{ include('components/_button.html.twig', {
+                    label: 'Exporter CSV',
+                    variant: 'tertiary',
+                    size: 'sm'
+                }) }}
             </div>
         </div>
-        <div id="sites-table" data-tabulator="sites" data-tabulator-url="{{ path('app_admin_sites_data') }}"></div>
+        <div id="sites-table-container" data-table-ajax="sites">
+            {% include 'admin/sites/_table.html.twig' with { pager: pager, params: params } %}
+        </div>
     </section>
+
+    <div id="site-delete-modal" tabindex="-1" class="hidden fixed left-0 right-0 top-0 z-50 h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+        <div class="relative w-full max-w-md p-4">
+            <div class="relative rounded-base border border-default bg-neutral-primary-soft p-4 shadow-sm md:p-6">
+                <button type="button" class="absolute end-2.5 top-3 inline-flex h-9 w-9 items-center justify-center rounded-base bg-transparent text-sm text-body hover:bg-neutral-tertiary hover:text-heading" data-modal-hide="site-delete-modal">
+                    <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                    </svg>
+                    <span class="sr-only">Fermer</span>
+                </button>
+                <div class="p-4 text-center md:p-5">
+                    <svg class="mx-auto mb-4 h-12 w-12 text-fg-disabled" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h3 class="mb-6 text-body">
+                        Confirmez la suppression du site <span class="font-semibold text-heading" data-delete-name>—</span> ?
+                    </h3>
+                    <div class="flex items-center justify-center space-x-4">
+                        <form method="post" data-delete-form>
+                            <input type="hidden" name="_token" value="">
+                            <button type="submit" class="text-white bg-danger box-border border border-transparent hover:bg-danger-strong focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                                Oui, supprimer
+                            </button>
+                        </form>
+                        <button data-modal-hide="site-delete-modal" type="button" class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                            Annuler
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
