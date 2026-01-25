@@ -45,8 +45,8 @@
                     <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand">Administration</p>
                     <ul class="space-y-0">
                         <li>
-                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'log_users' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_log_users_index') }}">
-                                <span>Journaux de connexion</span>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'authentication_logs' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_authentication_logs_index') }}">
+                                <span>Journaux d’authentification</span>
                             </a>
                         </li>
                         <li>
@@ -184,7 +184,7 @@
                             <li><a class="block px-4 py-2 text-body hover:bg-neutral-secondary-medium hover:text-heading focus:bg-neutral-secondary-medium focus:text-heading" href="#">Paramètres</a></li>
                         </ul>
                         <div class="py-2">
-                            <a class="block px-4 py-2 text-sm text-body hover:bg-neutral-secondary-medium hover:text-heading focus:bg-neutral-secondary-medium focus:text-heading" href="#">Déconnexion</a>
+                            <a class="block px-4 py-2 text-sm text-body hover:bg-neutral-secondary-medium hover:text-heading focus:bg-neutral-secondary-medium focus:text-heading" href="{{ path('app_logout') }}">Déconnexion</a>
                         </div>
                     </div>
                 </div>

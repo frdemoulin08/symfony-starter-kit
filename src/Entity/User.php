@@ -11,13 +11,20 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'app_user')]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['publicIdentifier'], message: 'There is already an account with this public identifier')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    public const ROLE_BUSINESS_ADMIN = 'ROLE_BUSINESS_ADMIN';
+    public const ROLE_APP_MANAGER = 'ROLE_APP_MANAGER';
+    public const ROLE_SUPERVISOR = 'ROLE_SUPERVISOR';
+    public const ROLE_USER = 'ROLE_USER';
+
     use TimestampableEntity;
 
     #[ORM\Id]
@@ -25,17 +32,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
-    private ?string $username = null;
-
-    #[ORM\Column(type: Types::JSON)]
-    private array $roles = [];
-
     #[ORM\Column(type: Types::STRING)]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
     private ?string $email = null;
+
+    #[ORM\Column(type: Types::STRING, length: 26, unique: true)]
+    private ?string $publicIdentifier = null;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $firstname = null;
@@ -53,15 +57,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private bool $isActive = true;
 
     /**
-     * @var Collection<int, LogUser>
+     * @var Collection<int, AuthenticationLog>
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: LogUser::class, cascade: ['remove'])]
-    #[ORM\OrderBy(['loginAt' => 'DESC'])]
-    private Collection $logUsers;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: AuthenticationLog::class, cascade: ['remove'])]
+    #[ORM\OrderBy(['occurredAt' => 'DESC'])]
+    private Collection $authenticationLogs;
+
+    /**
+     * @var Collection<int, Role>
+     */
+    #[ORM\ManyToMany(targetEntity: Role::class)]
+    #[ORM\JoinTable(name: 'user_role')]
+    private Collection $roles;
 
     public function __construct()
     {
-        $this->logUsers = new ArrayCollection();
+        $this->authenticationLogs = new ArrayCollection();
+        $this->roles = new ArrayCollection();
+        $this->publicIdentifier = (string) new Ulid();
     }
 
     public function getId(): ?int
@@ -69,34 +82,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
+        $roles = [];
+
+        foreach ($this->roles as $role) {
+            if ($role->isActive()) {
+                $roles[] = $role->getCode();
+            }
+        }
+
+        $roles[] = self::ROLE_USER;
 
         return array_values(array_unique($roles));
     }
 
-    public function setRoles(array $roles): self
+    public function hasRole(string $role): bool
     {
-        $this->roles = $roles;
+        return in_array($role, $this->getRoles(), true);
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole(self::ROLE_SUPER_ADMIN);
+    }
+
+    public function isBusinessAdmin(): bool
+    {
+        return $this->hasRole(self::ROLE_BUSINESS_ADMIN);
+    }
+
+    public function isAppManager(): bool
+    {
+        return $this->hasRole(self::ROLE_APP_MANAGER);
+    }
+
+    public function isSupervisor(): bool
+    {
+        return $this->hasRole(self::ROLE_SUPERVISOR);
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoleEntities(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRoleEntity(Role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+            if (!$role->getUsers()->contains($this)) {
+                $role->addUser($this);
+            }
+        }
+
+        return $this;
+    }
+
+    public function removeRoleEntity(Role $role): self
+    {
+        if ($this->roles->removeElement($role)) {
+            if ($role->getUsers()->contains($this)) {
+                $role->removeUser($this);
+            }
+        }
 
         return $this;
     }
@@ -125,7 +182,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        $this->email = mb_strtolower($email);
+
+        return $this;
+    }
+
+    public function getPublicIdentifier(): ?string
+    {
+        return $this->publicIdentifier;
+    }
+
+    public function setPublicIdentifier(?string $publicIdentifier): self
+    {
+        $this->publicIdentifier = $publicIdentifier;
 
         return $this;
     }
@@ -191,28 +260,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, LogUser>
+     * @return Collection<int, AuthenticationLog>
      */
-    public function getLogUsers(): Collection
+    public function getAuthenticationLogs(): Collection
     {
-        return $this->logUsers;
+        return $this->authenticationLogs;
     }
 
-    public function addLogUser(LogUser $logUser): self
+    public function addAuthenticationLog(AuthenticationLog $authenticationLog): self
     {
-        if (!$this->logUsers->contains($logUser)) {
-            $this->logUsers->add($logUser);
-            $logUser->setUser($this);
+        if (!$this->authenticationLogs->contains($authenticationLog)) {
+            $this->authenticationLogs->add($authenticationLog);
+            $authenticationLog->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeLogUser(LogUser $logUser): self
+    public function removeAuthenticationLog(AuthenticationLog $authenticationLog): self
     {
-        if ($this->logUsers->removeElement($logUser)) {
-            if ($logUser->getUser() === $this) {
-                $logUser->setUser(null);
+        if ($this->authenticationLogs->removeElement($authenticationLog)) {
+            if ($authenticationLog->getUser() === $this) {
+                $authenticationLog->setUser(null);
             }
         }
 
