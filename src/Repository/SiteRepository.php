@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Site;
+use App\Table\TableParams;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,119 +18,27 @@ class SiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Site::class);
     }
 
-    /**
-     * @param array<int, array<string, mixed>> $sorters
-     * @param array<int, array<string, mixed>> $filters
-     *
-     * @return array{data: array<int, Site>, total: int}
-     */
-    public function findForTabulator(int $page, int $size, array $sorters, array $filters): array
+    public function createTableQb(TableParams $params): QueryBuilder
     {
-        $qb = $this->createQueryBuilder('site');
+        $qb = $this->createQueryBuilder('s');
 
-        $allowedFields = [
-            'name' => 'site.name',
-            'city' => 'site.city',
-            'address' => 'site.address',
-            'capacity' => 'site.capacity',
-            'status' => 'site.status',
-            'updated_at' => 'site.updatedAt',
-        ];
+        $search = trim((string) ($params->filters['q'] ?? ''));
+        if ($search !== '') {
+            $qb
+                ->andWhere('s.name LIKE :search OR s.city LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
 
-        $this->applyFilters($qb, $filters, $allowedFields);
-        $this->applySorters($qb, $sorters, $allowedFields);
-
-        $countQb = clone $qb;
-        $total = (int) $countQb
-            ->select('COUNT(site.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        $offset = ($page - 1) * $size;
-        $data = $qb
-            ->setFirstResult($offset)
-            ->setMaxResults($size)
-            ->getQuery()
-            ->getResult();
-
-        return [
-            'data' => $data,
-            'total' => $total,
-        ];
+        return $qb;
     }
 
-    /**
-     * @param array<int, array<string, mixed>> $filters
-     * @param array<string, string> $allowedFields
-     */
-    private function applyFilters($qb, array $filters, array $allowedFields): void
+    public function remove(Site $site, bool $flush = false): void
     {
-        $index = 0;
+        $this->_em->remove($site);
 
-        foreach ($filters as $filter) {
-            if (!is_array($filter)) {
-                continue;
-            }
-
-            $field = $filter['field'] ?? null;
-            $value = $filter['value'] ?? null;
-
-            if (!$field || $value === null || $value === '' || !isset($allowedFields[$field])) {
-                continue;
-            }
-
-            $param = 'filter_' . $index;
-            $column = $allowedFields[$field];
-
-            if ($field === 'capacity') {
-                $qb->andWhere($column . ' = :' . $param)
-                    ->setParameter($param, (int) $value);
-                $index++;
-                continue;
-            }
-
-            if ($field === 'updated_at') {
-                $date = \DateTimeImmutable::createFromFormat('d/m/Y', (string) $value);
-                if (!$date) {
-                    continue;
-                }
-
-                $start = $date->setTime(0, 0);
-                $end = $date->setTime(23, 59, 59);
-
-                $qb->andWhere($column . ' BETWEEN :' . $param . '_start AND :' . $param . '_end')
-                    ->setParameter($param . '_start', $start)
-                    ->setParameter($param . '_end', $end);
-                $index++;
-                continue;
-            }
-
-            $qb->andWhere($column . ' LIKE :' . $param)
-                ->setParameter($param, '%' . $value . '%');
-            $index++;
+        if ($flush) {
+            $this->_em->flush();
         }
     }
 
-    /**
-     * @param array<int, array<string, mixed>> $sorters
-     * @param array<string, string> $allowedFields
-     */
-    private function applySorters($qb, array $sorters, array $allowedFields): void
-    {
-        foreach ($sorters as $sorter) {
-            if (!is_array($sorter)) {
-                continue;
-            }
-
-            $field = $sorter['field'] ?? null;
-            $dir = strtolower((string) ($sorter['dir'] ?? 'asc'));
-
-            if (!$field || !isset($allowedFields[$field])) {
-                continue;
-            }
-
-            $direction = $dir === 'desc' ? 'DESC' : 'ASC';
-            $qb->addOrderBy($allowedFields[$field], $direction);
-        }
-    }
 }

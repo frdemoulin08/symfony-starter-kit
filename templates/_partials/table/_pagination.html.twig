@@ -1,0 +1,41 @@
+{% set params = params ?? null %}
+{% set route = route ?? null %}
+{% if pager.nbResults > 0 %}
+    {% set startIndex = ((pager.currentPage - 1) * pager.maxPerPage) + 1 %}
+    {% set endIndex = startIndex + (pager.currentPageResults|length - 1) %}
+    {% set endIndex = endIndex > pager.nbResults ? pager.nbResults : endIndex %}
+    <nav class="flex flex-column flex-wrap items-center justify-between p-4 text-sm text-body md:flex-row" aria-label="Table navigation">
+        <span class="mb-4 block w-full text-sm font-normal md:mb-0 md:inline md:w-auto">
+            Affichage <span class="font-semibold text-heading">{{ startIndex }}-{{ endIndex }}</span> sur <span class="font-semibold text-heading">{{ pager.nbResults }}</span>
+        </span>
+        <ul class="flex -space-x-px text-sm">
+            {% if pager.hasPreviousPage %}
+                <li>
+                    <a href="{{ path(route, params.toQueryArray()|merge({ page: pager.previousPage })) }}"
+                       data-table-link
+                       class="flex h-9 items-center justify-center rounded-s-base border border-default-medium bg-neutral-secondary-medium px-3 text-sm font-medium text-body hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none">
+                        Précédent
+                    </a>
+                </li>
+            {% endif %}
+            {% for page in 1..pager.nbPages %}
+                <li>
+                    <a href="{{ path(route, params.toQueryArray()|merge({ page: page })) }}"
+                       data-table-link
+                       class="flex h-9 w-9 items-center justify-center border border-default-medium text-sm font-medium {{ page == pager.currentPage ? 'bg-brand-softer text-fg-brand hover:bg-brand-soft' : 'bg-neutral-secondary-medium text-body hover:bg-neutral-tertiary-medium hover:text-heading' }} focus:outline-none">
+                        {{ page }}
+                    </a>
+                </li>
+            {% endfor %}
+            {% if pager.hasNextPage %}
+                <li>
+                    <a href="{{ path(route, params.toQueryArray()|merge({ page: pager.nextPage })) }}"
+                       data-table-link
+                       class="flex h-9 items-center justify-center rounded-e-base border border-default-medium bg-neutral-secondary-medium px-3 text-sm font-medium text-body hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none">
+                        Suivant
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
