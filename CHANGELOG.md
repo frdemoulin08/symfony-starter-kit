@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.0.0...v1.0.1) (2026-01-25)
+
+
+### Bug Fixes
+
+* mise en place de la journalisation des connexions ([5649a2a](https://github.com/frdemoulin08/symfony-starter-kit/commit/5649a2a3fcc468578f0992f11585ab954c42ffa9))
+
 # 1.0.0 (2026-01-24)
 
 
