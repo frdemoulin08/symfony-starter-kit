@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.0.1...v1.1.0) (2026-01-25)
+
+
+### Bug Fixes
+
+* mise en place de la journalisation des authentifications ([62198a2](https://github.com/frdemoulin08/symfony-starter-kit/commit/62198a2f5b5c8a865acc2f7a029a3c413cdbf752))
+
+
+### Features
+
+* mise en place des tableaux ([98b21ce](https://github.com/frdemoulin08/symfony-starter-kit/commit/98b21cec9d76dc0280da2b86ab10074c55599c1f))
+
 ## [1.0.1](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.0.0...v1.0.1) (2026-01-25)
 
 
