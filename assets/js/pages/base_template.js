@@ -1,9 +1,11 @@
 import { initThemeToggle } from '../helpers/theme.js';
 import { initNotificationBadge } from '../helpers/notifications.js';
-import { initTabulatorTables } from '../tabulator/init.js';
+import { initTableAjax } from '../table-ajax.js';
+import { initModalToggles } from '../helpers/modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initThemeToggle();
     initNotificationBadge();
-    initTabulatorTables();
+    initTableAjax();
+    initModalToggles();
 });

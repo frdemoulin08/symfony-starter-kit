@@ -9,13 +9,13 @@ Conformément à la note RGPD, la purge des connexions est prévue **une fois pa
 Commande :
 
 ```
-php bin/console app:log-user:purge --days=365
+php bin/console app:auth-log:purge --days=365
 ```
 
 Exemple de CRON (exécution hebdomadaire, le lundi à 03h15) :
 
 ```
-15 3 * * 1 /usr/bin/php /chemin/vers/le/projet/bin/console app:log-user:purge --days=365
+15 3 * * 1 /usr/bin/php /chemin/vers/le/projet/bin/console app:auth-log:purge --days=365
 ```
 
 ## Recommandations
