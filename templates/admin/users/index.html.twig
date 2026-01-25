@@ -1,0 +1,18 @@
+{% extends 'admin/_layout.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% set active_menu = 'users' %}
+
+{% block admin_content %}
+    <div class="mb-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand">Administration</p>
+        <h1 class="mt-3 text-3xl font-semibold text-heading">Utilisateurs</h1>
+        <p class="mt-2 max-w-2xl text-sm text-body">Gestion des comptes et habilitations.</p>
+    </div>
+
+    <section class="rounded-2xl border border-default bg-neutral-primary-soft p-5 shadow-xs">
+        <p class="text-sm font-semibold text-heading">Liste des utilisateurs</p>
+        <p class="mt-1 text-sm text-body">Cette page sera connectée aux données utilisateurs.</p>
+    </section>
+{% endblock %}

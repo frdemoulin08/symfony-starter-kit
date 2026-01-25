@@ -23,9 +23,9 @@ class AppFixtures extends Fixture
             $site->setCapacity($row['capacity']);
             $site->setStatus($row['status']);
 
-            $updatedAt = new \DateTimeImmutable($row['updated_at']);
+            $updatedAt = new \DateTime($row['updated_at']);
             $site->setUpdatedAt($updatedAt);
-            $site->setCreatedAt($updatedAt->modify('-10 days'));
+            $site->setCreatedAt((clone $updatedAt)->modify('-10 days'));
 
             $manager->persist($site);
         }

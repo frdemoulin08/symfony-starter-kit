@@ -1,0 +1,18 @@
+{% extends 'admin/_layout.html.twig' %}
+
+{% block title %}Journaux de connexion{% endblock %}
+
+{% set active_menu = 'log_users' %}
+
+{% block admin_content %}
+    <div class="mb-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand">Administration</p>
+        <h1 class="mt-3 text-3xl font-semibold text-heading">Journaux de connexion</h1>
+        <p class="mt-2 max-w-2xl text-sm text-body">Suivi des connexions et conformité RGPD.</p>
+    </div>
+
+    <section class="rounded-2xl border border-default bg-neutral-primary-soft p-5 shadow-xs">
+        <p class="text-sm font-semibold text-heading">Historique des connexions</p>
+        <p class="mt-1 text-sm text-body">Cette page affichera les connexions des utilisateurs.</p>
+    </section>
+{% endblock %}
