@@ -1,0 +1,17 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block form_label %}
+    {% if label is same as(false) %}
+        {# no label #}
+    {% else %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        {% if required is same as(false) and label is not empty and '(optionnel)' not in label %}
+            {% set label = label ~ ' (optionnel)' %}
+        {% endif %}
+        <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
+            {{ label|trans({}, translation_domain) }}
+        </label>
+    {% endif %}
+{% endblock %}

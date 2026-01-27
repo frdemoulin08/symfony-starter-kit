@@ -36,7 +36,7 @@ La stratégie permet de couvrir les besoins suivants :
 
 - pagination (links “Précédent / Suivant” + pages) ;
 - tri simple et multi-colonnes (extensible) ;
-- filtrage / recherche serveur (formulaires au-dessus du tableau) ;
+- filtrage / recherche serveur (formulaires au-dessus du tableau, déclenchement AJAX sans bouton) ;
 - export des données (CSV / XLSX) ;
 - affichage cohérent Flowbite (tables, boutons, badges, etc.) ;
 - rechargement **AJAX du tableau** (HTML fragment) dans un conteneur dédié.
@@ -57,6 +57,7 @@ Un JavaScript global léger :
 
 - intercepte les clics sur les liens de tri et de pagination ;
 - intercepte les soumissions de formulaires de filtre/recherche ;
+- intercepte la saisie sur les champs de recherche (`[data-table-search]`) avec un seuil de caractères ;
 - déclenche une requête `fetch()` vers la même route avec l’en-tête `X-Requested-With: XMLHttpRequest` ;
 - remplace le contenu du conteneur du tableau par le fragment HTML renvoyé par Symfony ;
 - met à jour l’URL (history API) pour conserver un état navigable.
@@ -190,11 +191,31 @@ Un script unique backoffice :
 - intercepte :
   - les clics sur les liens de tri et pagination (`[data-table-link]`) ;
   - les soumissions de formulaires de filtre/recherche (`[data-table-form]`) ;
+  - la saisie sur les champs de recherche (`[data-table-search]`) avec un seuil ;
 - exécute une requête AJAX (`fetch`) vers la même URL, avec un en-tête `X-Requested-With: XMLHttpRequest` ;
 - remplace le contenu HTML du conteneur par la réponse ;
 - met à jour l’URL dans la barre d’adresse (history API) pour conserver un état navigable et partageable.
 
 Aucune dépendance à jQuery, Stimulus ou autres frameworks JS n’est requise.
+
+### Recherche sans bouton
+
+Les champs de recherche peuvent déclencher une requête AJAX sans bouton de validation :
+
+- attributs utilisés : `data-table-search` et `data-min-length="3"` ;
+- déclenchement à partir de **3 caractères** saisis (seuil configurable) ;
+- si le champ est vidé, la liste est relancée avec les filtres restants ;
+- les paramètres sont transmis via `filter[q]` (compatible `TableParams`).
+
+Exemple :
+
+```twig
+<input type="search"
+       name="filter[q]"
+       data-table-search
+       data-min-length="3"
+       placeholder="Rechercher…">
+```
 
 ---
 

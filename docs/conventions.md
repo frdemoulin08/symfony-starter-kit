@@ -32,3 +32,12 @@ Ce choix est acceptable car :
 - des contrôles d’accès sont systématiquement appliqués côté serveur.
 
 Pour les parties de l’application éventuellement exposées à des profils non administrateurs, il est recommandé d’utiliser des identifiants **opaques** (ex. `publicId` de type UUID/ULID) ou des routes sans identifiant explicite (ex. `/mon-compte`), afin de limiter les risques de manipulation des URLs (IDOR).
+
+### Libellés de formulaires (champs optionnels)
+
+Convention UI : **les champs optionnels** affichent « (optionnel) » dans leur libellé, **aucune mention** pour les champs obligatoires.
+
+Exemples :
+
+- `Adresse (optionnel)`
+- `Capacité (optionnel)`
