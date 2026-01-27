@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.1.0...v1.1.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* mise en place de flasher (wip) ([11da138](https://github.com/frdemoulin08/symfony-starter-kit/commit/11da1388749d4b61702ffdbfbb326e90a129436e))
+
 # [1.1.0](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.0.1...v1.1.0) (2026-01-25)
 
 
