@@ -1,0 +1,77 @@
+{#
+params:
+- homeRoute
+- homeLabel
+- indexRoute
+- indexLabel
+- showRoute
+- showLabel
+- createRoute
+- createLabel
+- editRoute
+- editLabel
+#}
+{% set current_route = app.request.attributes.get('_route') %}
+{# index #}
+{% if current_route == indexRoute %}
+	<li class="inline-flex items-center">
+		<a href="{{ path(homeRoute) }}" class="inline-flex items-center text-sm font-medium text-body hover:text-fg-brand">
+			{{ ux_icon('bi:house-door-fill', {class: 'w-3 h-3 me-2.5 text-body'}) }}
+			{{ homeLabel }}
+		</a>
+	</li>
+	<li aria-current="page">
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			<span class="inline-flex items-center text-sm font-medium text-body-subtle">{{ indexLabel }}</span>
+		</div>
+	</li>
+{% endif %}
+{# détail #}
+{% if current_route == showRoute %}
+	<li class="inline-flex items-center">
+		<a href="{{ path(homeRoute) }}" class="inline-flex items-center text-sm font-medium text-body hover:text-fg-brand">
+			{{ ux_icon('bi:house-door-fill', {class: 'w-3 h-3 me-2.5 text-body'}) }}
+			{{ homeLabel }}
+		</a>
+	</li>
+	<li class="inline-flex items-center">
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			<a href="{{ path(indexRoute) }}" class="inline-flex items-center text-sm font-medium text-body hover:text-fg-brand">{{ indexLabel }}</a>
+		</div>
+	</li>
+	<li aria-current="page">
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			<span class="inline-flex items-center text-sm font-medium text-body-subtle">{{ showLabel }}</span>
+		</div>
+	</li>
+{% endif %}
+{# création / édition #}
+{% if current_route == createRoute or current_route == editRoute %}
+	<li class="inline-flex items-center">
+		<a href="{{ path(homeRoute) }}" class="inline-flex items-center text-sm font-medium text-body hover:text-fg-brand">
+			{{ ux_icon('bi:house-door-fill', {class: 'w-3 h-3 me-2.5 text-body'}) }}
+			{{ homeLabel }}
+		</a>
+	</li>
+	<li class="inline-flex items-center">
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			<a href="{{ path(indexRoute) }}" class="inline-flex items-center text-sm font-medium text-body hover:text-fg-brand">{{ indexLabel }}</a>
+		</div>
+	</li>
+	<li aria-current="page">
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			<span class="inline-flex items-center text-sm font-medium text-body-subtle">
+				{% if current_route == createRoute %}
+					{{ createLabel}}
+				{% elseif current_route == editRoute %}
+					{{ editLabel }}
+				{% endif %}
+			</span>
+		</div>
+	</li>
+{% endif %}

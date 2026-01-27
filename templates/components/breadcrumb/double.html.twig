@@ -1,0 +1,42 @@
+{#
+params:
+- homeRoute
+- homeLabel
+- firstLevelRoute
+- firstLevelLabel
+- firstLevelHasLink (bool) : affiche ou non le lien du niveau 1
+- secondLevelRoute
+- secondLevelLabel
+#}
+{% set firstLevelHasLink = to_bool(firstLevelHasLink|default(true), true) %}
+{% set current_route = app.request.attributes.get('_route') %}
+
+{# fil d'ariane à deux niveaux #}
+{% if current_route == secondLevelRoute %}
+	{# accueil #}
+	<li class="inline-flex items-center">
+		<a href="{{ path(homeRoute) }}" class="inline-flex items-center text-sm font-medium link">
+			{{ homeLabel }}
+		</a>
+	</li>
+	{# niveau 1 #}
+	<li>
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			{% if firstLevelHasLink %}
+				<a href="{{ path(firstLevelRoute) }}" class="inline-flex items-center text-sm font-medium link">
+					{{ firstLevelLabel }}
+				</a>
+			{% else %}
+				<span class="inline-flex items-center text-sm font-medium text-body-subtle">{{ firstLevelLabel }}</span>
+			{% endif %}
+		</div>
+	</li>
+	{# niveau 2 #}
+	<li aria-current="page">
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			<span class="inline-flex items-center text-sm font-medium text-body-subtle">{{ secondLevelLabel }}</span>
+		</div>
+	</li>
+{% endif %}

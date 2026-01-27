@@ -9,10 +9,13 @@ use App\Table\TablePaginator;
 use App\Table\TableParams;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted(new Expression('is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_BUSINESS_ADMIN") or is_granted("ROLE_APP_MANAGER")'))]
 class SiteController extends AbstractController
 {
     #[Route('/administration/sites', name: 'app_admin_sites_index')]
@@ -95,11 +98,12 @@ class SiteController extends AbstractController
     #[Route('/administration/sites/{id}/delete', name: 'app_admin_sites_delete', requirements: ['id' => '\\d+'], methods: ['POST'])]
     public function delete(Request $request, Site $site, SiteRepository $siteRepository): Response
     {
-        if (!$this->isCsrfTokenValid('delete_site_' . $site->getId(), (string) $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete_site', (string) $request->request->get('_token'))) {
             return $this->redirectToRoute('app_admin_sites_index');
         }
 
         $siteRepository->remove($site, true);
+        $this->addFlash('success', 'Le site a été supprimé.');
 
         return $this->redirectToRoute('app_admin_sites_index');
     }

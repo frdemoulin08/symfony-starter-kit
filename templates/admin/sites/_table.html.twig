@@ -51,9 +51,7 @@
                                             class="inline-flex w-full items-center rounded px-2 py-2 font-medium text-fg-danger hover:bg-neutral-tertiary-medium"
                                             data-modal-target="site-delete-modal"
                                             data-modal-toggle="site-delete-modal"
-                                            data-table-target="sites"
                                             data-delete-url="{{ path('app_admin_sites_delete', { id: site.id }) }}"
-                                            data-delete-token="{{ csrf_token('delete_site_' ~ site.id) }}"
                                             data-delete-name="{{ site.name }}"
                                         >
                                             Supprimer
