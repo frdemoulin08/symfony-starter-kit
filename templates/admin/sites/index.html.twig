@@ -27,6 +27,8 @@
                            class="block w-full rounded-base border border-default bg-neutral-primary px-3 py-2 ps-9 text-sm text-heading placeholder:text-body"
                            type="search"
                            name="filter[q]"
+                           data-table-search
+                           data-min-length="3"
                            value="{{ params.filters.q ?? '' }}"
                            placeholder="Rechercher un site ou une commune">
                 </div>
@@ -37,7 +39,7 @@
                 {{ include('components/_button.html.twig', {
                     label: 'Ajouter un site',
                     variant: 'primary',
-                    href: '#',
+                    href: path('app_admin_sites_new'),
                     size: 'sm',
                     extra_class: 'flex items-center justify-center',
                     icon: '<svg class=\"mr-2 h-3.5 w-3.5\" fill=\"currentColor\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z\" /></svg>'
@@ -71,15 +73,15 @@
                         Confirmez la suppression du site <span class="font-semibold text-heading" data-delete-name>—</span> ?
                     </h3>
                     <div class="flex items-center justify-center space-x-4">
+                        <button data-modal-hide="site-delete-modal" type="button" class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                            Annuler
+                        </button>
                         <form method="post" data-delete-form>
                             <input type="hidden" name="_token" value="">
                             <button type="submit" class="text-white bg-danger box-border border border-transparent hover:bg-danger-strong focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                                 Oui, supprimer
                             </button>
                         </form>
-                        <button data-modal-hide="site-delete-modal" type="button" class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                            Annuler
-                        </button>
                     </div>
                 </div>
             </div>

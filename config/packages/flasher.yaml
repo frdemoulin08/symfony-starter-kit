@@ -1,0 +1,3 @@
+flasher:
+    options:
+        timeout: 2500

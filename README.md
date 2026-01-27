@@ -10,3 +10,5 @@ Usage JavaScript : `docs/js-usage.md`
 Accès phpMyAdmin : `docs/phpmyadmin.md`  
 Journalisation RGPD : `docs/rgpd-journalisation.md`  
 Tâches CRON : `docs/cron.md`
+Stratégie tableaux : `docs/technical/tableaux/strategie-gestion-tableaux-symfony-flowbite.md`  
+Guide dev tableaux : `docs/technical/tableaux/guide-implementation-tableaux.md`
