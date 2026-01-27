@@ -20,6 +20,11 @@
                     <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand">Gestion</p>
                     <ul class="space-y-0">
                         <li>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'dashboard' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_index') }}">
+                                <span>Accueil</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'sites' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_sites_index') }}">
                                 <span>Sites</span>
                             </a>

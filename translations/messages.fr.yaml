@@ -3,3 +3,7 @@ roles:
   ROLE_BUSINESS_ADMIN: "Administrateur métier"
   ROLE_APP_MANAGER: "Gestionnaire applicatif"
   ROLE_SUPERVISOR: "Superviseur"
+Success: "Succès"
+Error: "Erreur"
+Warning: "Attention"
+Info: "Information"

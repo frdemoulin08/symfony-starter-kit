@@ -41,3 +41,11 @@ Exemples :
 
 - `Adresse (optionnel)`
 - `Capacité (optionnel)`
+
+### Couleurs des actions (boutons)
+
+Convention UI : les boutons d’**export** utilisent la variante **success** (vert Flowbite).
+
+Exemple :
+
+- `Exporter CSV` → `variant: 'success'`
