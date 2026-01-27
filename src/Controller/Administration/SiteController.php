@@ -3,9 +3,11 @@
 namespace App\Controller\Administration;
 
 use App\Entity\Site;
+use App\Form\SiteType;
 use App\Repository\SiteRepository;
 use App\Table\TablePaginator;
 use App\Table\TableParams;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,6 +43,27 @@ class SiteController extends AbstractController
         ]);
     }
 
+    #[Route('/administration/sites/new', name: 'app_admin_sites_new')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $site = new Site();
+        $form = $this->createForm(SiteType::class, $site);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($site);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le site a été créé avec succès.');
+
+            return $this->redirectToRoute('app_admin_sites_show', ['id' => $site->getId()]);
+        }
+
+        return $this->render('admin/sites/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/administration/sites/{id}', name: 'app_admin_sites_show', requirements: ['id' => '\\d+'])]
     public function show(Site $site): Response
     {
@@ -50,10 +73,22 @@ class SiteController extends AbstractController
     }
 
     #[Route('/administration/sites/{id}/edit', name: 'app_admin_sites_edit', requirements: ['id' => '\\d+'])]
-    public function edit(Site $site): Response
+    public function edit(Request $request, Site $site, EntityManagerInterface $entityManager): Response
     {
+        $form = $this->createForm(SiteType::class, $site);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le site a été mis à jour.');
+
+            return $this->redirectToRoute('app_admin_sites_show', ['id' => $site->getId()]);
+        }
+
         return $this->render('admin/sites/edit.html.twig', [
             'site' => $site,
+            'form' => $form->createView(),
         ]);
     }
 

@@ -64,6 +64,21 @@ const fetchFragment = async (url, container) => {
     syncFormFromUrl(url, container);
 };
 
+const buildUrlFromForm = (form) => {
+    const url = new URL(form.action, window.location.origin);
+    const formData = new FormData(form);
+
+    for (const [key, value] of formData.entries()) {
+        if (value === '') {
+            url.searchParams.delete(key);
+            continue;
+        }
+        url.searchParams.set(key, value.toString());
+    }
+
+    return url;
+};
+
 export const initTableAjax = () => {
     document.addEventListener('click', (event) => {
         const row = event.target.closest('[data-row-link]');
@@ -112,19 +127,58 @@ export const initTableAjax = () => {
 
         event.preventDefault();
 
-        const url = new URL(form.action, window.location.origin);
-        const formData = new FormData(form);
-
-        for (const [key, value] of formData.entries()) {
-            if (value === '') {
-                url.searchParams.delete(key);
-                continue;
-            }
-            url.searchParams.set(key, value.toString());
-        }
+        const url = buildUrlFromForm(form);
 
         fetchFragment(url.toString(), container).catch(() => {
             window.location.href = url.toString();
         });
+    });
+
+    const debounceMap = new WeakMap();
+
+    document.addEventListener('input', (event) => {
+        const field = event.target.closest('[data-table-search]');
+        if (!field) {
+            return;
+        }
+
+        const form = field.closest('[data-table-form]');
+        if (!form) {
+            return;
+        }
+
+        const container = resolveContainer(form);
+        if (!container) {
+            return;
+        }
+
+        const minLength = Number(field.dataset.minLength ?? 3);
+        const value = field.value.trim();
+
+        const existingTimer = debounceMap.get(field);
+        if (existingTimer) {
+            clearTimeout(existingTimer);
+        }
+
+        const timer = setTimeout(() => {
+            if (value.length === 0) {
+                const url = buildUrlFromForm(form);
+                fetchFragment(url.toString(), container).catch(() => {
+                    window.location.href = url.toString();
+                });
+                return;
+            }
+
+            if (value.length < minLength) {
+                return;
+            }
+
+            const url = buildUrlFromForm(form);
+            fetchFragment(url.toString(), container).catch(() => {
+                window.location.href = url.toString();
+            });
+        }, 250);
+
+        debounceMap.set(field, timer);
     });
 };
