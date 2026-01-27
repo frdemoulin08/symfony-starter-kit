@@ -31,14 +31,4 @@ class SiteRepository extends ServiceEntityRepository
 
         return $qb;
     }
-
-    public function remove(Site $site, bool $flush = false): void
-    {
-        $this->_em->remove($site);
-
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
-
 }

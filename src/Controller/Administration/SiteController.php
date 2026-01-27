@@ -96,13 +96,14 @@ class SiteController extends AbstractController
     }
 
     #[Route('/administration/sites/{id}/delete', name: 'app_admin_sites_delete', requirements: ['id' => '\\d+'], methods: ['POST'])]
-    public function delete(Request $request, Site $site, SiteRepository $siteRepository): Response
+    public function delete(Request $request, Site $site, EntityManagerInterface $entityManager): Response
     {
         if (!$this->isCsrfTokenValid('delete_site', (string) $request->request->get('_token'))) {
             return $this->redirectToRoute('app_admin_sites_index');
         }
 
-        $siteRepository->remove($site, true);
+        $entityManager->remove($site);
+        $entityManager->flush();
         $this->addFlash('success', 'Le site a été supprimé.');
 
         return $this->redirectToRoute('app_admin_sites_index');

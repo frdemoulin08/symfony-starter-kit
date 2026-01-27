@@ -7,3 +7,4 @@
 - [Versioning](VERSIONING.md)
 - [Sécurité](security/)
 - [Technique](technical/)
+- [CRUD (standard)](technical/crud.md)
