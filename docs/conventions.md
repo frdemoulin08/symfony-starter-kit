@@ -41,3 +41,29 @@ Exemples :
 
 - `Adresse (optionnel)`
 - `Capacité (optionnel)`
+
+### Couleurs des actions (boutons)
+
+Convention UI : les boutons d’**export** utilisent la variante **success** (vert Flowbite).
+
+Exemple :
+
+- `Exporter CSV` → `variant: 'success'`
+
+### Lignes de tableau cliquables (backoffice)
+
+Convention UI : les lignes de tableaux d’administration doivent être cliquables pour accéder à la page de détail.
+
+Mise en place :
+- ajouter `data-row-link="..."` sur le `<tr>`
+- ajouter `hover:bg-neutral-secondary-medium` et `cursor-pointer` sur la ligne
+- le comportement est géré par le JS global (`assets/js/table-ajax.js`) et **n’interfère pas** avec les boutons/links internes
+
+Exemple :
+
+```twig
+<tr class="border-b border-default bg-neutral-primary-soft hover:bg-neutral-secondary-medium cursor-pointer"
+    data-row-link="{{ path('app_admin_users_show', { id: user.id }) }}">
+    ...
+</tr>
+```
