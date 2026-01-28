@@ -82,17 +82,18 @@ export const initModalToggles = () => {
             return;
         }
 
+        if (!form.hasAttribute('data-delete-ajax')) {
+            return;
+        }
+
+        event.preventDefault();
+
         const modal = form.closest('[id]');
         const tableTarget = form.dataset.tableTarget;
         const container = tableTarget
             ? document.querySelector(`[data-table-ajax="${tableTarget}"]`)
             : document.querySelector('[data-table-ajax]');
-
-        if (!container) {
-            return;
-        }
-
-        event.preventDefault();
+        const shouldRefreshTable = Boolean(container);
 
         const formData = new FormData(form);
 
@@ -102,12 +103,20 @@ export const initModalToggles = () => {
                 'X-Requested-With': 'XMLHttpRequest',
             },
             body: formData,
-        })
+            })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Erreur réseau');
                 }
                 toggleModal(modal, false);
+                if (!shouldRefreshTable) {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                        return null;
+                    }
+                    window.location.reload();
+                    return null;
+                }
                 return fetch(window.location.href, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
@@ -115,13 +124,18 @@ export const initModalToggles = () => {
                 });
             })
             .then((response) => {
+                if (!response) {
+                    return null;
+                }
                 if (!response.ok) {
                     throw new Error('Erreur réseau');
                 }
                 return response.text();
             })
             .then((html) => {
-                container.innerHTML = html;
+                if (html && container) {
+                    container.innerHTML = html;
+                }
             })
             .catch(() => {
                 window.location.reload();

@@ -1,0 +1,22 @@
+{#
+params:
+- homeRoute
+- homeLabel
+- route
+- label
+#}
+{% set current_route = app.request.attributes.get('_route') %}
+{# single element #}
+{% if current_route == route %}
+	<li class="inline-flex items-center">
+		<a href="{{ path(homeRoute) }}" class="inline-flex items-center text-sm font-medium link">
+			{{ homeLabel }}
+		</a>
+	</li>
+	<li aria-current="page">
+		<div class="flex items-center">
+			{{ ux_icon('bxs:chevron-right', {class: 'w-5 h-5 text-body mx-1'}) }}
+			<span class="inline-flex items-center text-sm font-medium text-body-subtle">{{ label }}</span>
+		</div>
+	</li>
+{% endif %}
