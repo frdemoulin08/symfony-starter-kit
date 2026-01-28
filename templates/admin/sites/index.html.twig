@@ -21,43 +21,29 @@
     </div>
 
     <section class="rounded-2xl border border-default bg-neutral-primary-soft p-5 shadow-xs">
-        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <form class="flex w-full flex-1 items-center gap-3 md:w-auto" method="get" action="{{ path('app_admin_sites_index') }}" data-table-form data-table-target="sites">
-                <label class="sr-only" for="sites-search">Rechercher</label>
-                <div class="relative w-full md:min-w-70">
-                    <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
-                        <svg class="h-4 w-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
-                        </svg>
-                    </div>
-                    <input id="sites-search"
-                           class="block w-full rounded-base border border-default bg-neutral-primary px-3 py-2 ps-9 text-sm text-heading placeholder:text-body"
-                           type="search"
-                           name="filter[q]"
-                           data-table-search
-                           data-min-length="3"
-                           value="{{ params.filters.q ?? '' }}"
-                           placeholder="Rechercher un site ou une commune">
-                </div>
-                <input type="hidden" name="sort" value="{{ params.sort }}">
-                <input type="hidden" name="direction" value="{{ params.direction }}">
-            </form>
-            <div class="flex flex-wrap gap-2">
-                {{ include('components/_button.html.twig', {
+        {{ include('components/_table_header.html.twig', {
+            route: 'app_admin_sites_index',
+            params: params,
+            target: 'sites',
+            search_id: 'sites-search',
+            search_placeholder: 'Rechercher un site ou une commune',
+            search_value: params.filters.q ?? '',
+            actions: [
+                {
                     label: 'Ajouter un site',
                     variant: 'primary',
                     href: path('app_admin_sites_new'),
                     size: 'sm',
                     extra_class: 'flex items-center justify-center',
                     icon: '<svg class=\"mr-2 h-3.5 w-3.5\" fill=\"currentColor\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z\" /></svg>'
-                }) }}
-                {{ include('components/_button.html.twig', {
+                },
+                {
                     label: 'Exporter CSV',
                     variant: 'success',
                     size: 'sm'
-                }) }}
-            </div>
-        </div>
+                }
+            ]
+        }) }}
         <div id="sites-table-container" data-table-ajax="sites">
             {% include 'admin/sites/_table.html.twig' with { pager: pager, params: params } %}
         </div>
