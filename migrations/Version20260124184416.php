@@ -26,6 +26,7 @@ final class Version20260124184416 extends AbstractMigration
         $this->addSql('CREATE TABLE user_role (user_id INT NOT NULL, role_id INT NOT NULL, INDEX IDX_2DE8C6A3A76ED395 (user_id), INDEX IDX_2DE8C6A3D60322AC (role_id), PRIMARY KEY (user_id, role_id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE log_authentication (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, identifier VARCHAR(255) NOT NULL, event_type VARCHAR(32) NOT NULL, occurred_at DATETIME NOT NULL, ip_address VARCHAR(45) DEFAULT NULL, user_agent LONGTEXT DEFAULT NULL, failure_reason VARCHAR(255) DEFAULT NULL, INDEX IDX_3BB1C59EA76ED395 (user_id), INDEX idx_log_authentication_occurred_at (occurred_at), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('ALTER TABLE log_authentication ADD CONSTRAINT FK_3BB1C59EA76ED395 FOREIGN KEY (user_id) REFERENCES app_user (id) ON DELETE CASCADE');
+        $this->addSql('CREATE TABLE cron_task_run (id INT AUTO_INCREMENT NOT NULL, command VARCHAR(255) NOT NULL, status VARCHAR(20) NOT NULL, started_at DATETIME NOT NULL, finished_at DATETIME DEFAULT NULL, duration_ms INT DEFAULT NULL, exit_code INT DEFAULT NULL, summary VARCHAR(255) DEFAULT NULL, output LONGTEXT DEFAULT NULL, error LONGTEXT DEFAULT NULL, context JSON DEFAULT NULL, INDEX idx_cron_task_run_started_at (started_at), INDEX idx_cron_task_run_status (status), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('ALTER TABLE user_role ADD CONSTRAINT FK_2DE8C6A3A76ED395 FOREIGN KEY (user_id) REFERENCES app_user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user_role ADD CONSTRAINT FK_2DE8C6A3D60322AC FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE');
         $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL, available_at DATETIME NOT NULL, delivered_at DATETIME DEFAULT NULL, INDEX IDX_75EA56E0FB7336F0E3BD61CE16BA31DBBF396750 (queue_name, available_at, delivered_at, id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
@@ -35,6 +36,7 @@ final class Version20260124184416 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE log_authentication');
+        $this->addSql('DROP TABLE cron_task_run');
         $this->addSql('DROP TABLE user_role');
         $this->addSql('DROP TABLE app_user');
         $this->addSql('DROP TABLE role');

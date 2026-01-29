@@ -29,28 +29,44 @@
     </div>
 
     <section class="rounded-2xl border border-default bg-neutral-primary-soft p-6 shadow-xs">
-        {{ form_start(form, { attr: { class: 'grid gap-6 md:grid-cols-2' } }) }}
-            <div>
-                {{ form_label(form.firstname, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.firstname, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.firstname) }}
-            </div>
-            <div>
-                {{ form_label(form.lastname, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.lastname, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.lastname) }}
-            </div>
-            <div class="md:col-span-2">
-                {{ form_label(form.email, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.email, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.email) }}
-            </div>
-            <div class="md:col-span-2">
-                {{ form_label(form.plainPassword, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
+        {{ form_start(form, { attr: { class: 'grid gap-6 md:grid-cols-2', novalidate: 'novalidate', 'data-validate-form': 'true' } }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.firstname,
+                required_message: 'Le prénom est obligatoire'
+            }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.lastname,
+                required_message: 'Le nom est obligatoire'
+            }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.email,
+                wrapper_class: 'md:col-span-2',
+                required_message: 'L’email est obligatoire',
+                email_message: 'Le format de l’email est invalide',
+                pattern: '^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$',
+                pattern_message: 'Le format de l’email est invalide'
+            }) }}
+            <div class="md:col-span-2" data-validate-field>
+                {% set password_has_error = form.plainPassword.vars.errors|length > 0 %}
+                {% set password_error_id = form.plainPassword.vars.id ~ '-error' %}
+                {{ form_label(form.plainPassword, null, { label_attr: {
+                    class: 'mb-2 block text-sm font-medium ' ~ (password_has_error ? 'text-danger dark:text-fg-danger-strong' : 'text-heading'),
+                    'data-validate-label': 'true',
+                    'data-validate-valid-class': 'text-heading',
+                    'data-validate-invalid-class': 'text-danger dark:text-fg-danger-strong'
+                } }) }}
                 <p class="mb-2 text-xs text-body-subtle">Laissez vide pour conserver le mot de passe actuel.</p>
                 <div class="flex flex-col gap-2 md:flex-row md:items-center">
                     <div class="relative flex-1">
-                        {{ form_widget(form.plainPassword, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 pr-10 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
+                        {{ form_widget(form.plainPassword, { attr: {
+                            class: 'w-full rounded-base border bg-neutral-primary px-3 py-2 pr-10 text-sm text-heading placeholder:text-body focus:ring-2 ' ~ (password_has_error ? 'border-danger/60 dark:border-danger-subtle focus:border-danger focus:ring-danger-medium/40 dark:focus:ring-danger' : 'border-default focus:border-brand-medium focus:ring-brand-medium/40'),
+                            'aria-invalid': password_has_error ? 'true' : 'false',
+                            'aria-describedby': password_error_id,
+                            'data-validate-input': 'true',
+                            'data-validate-valid-class': 'border-default focus:border-brand-medium focus:ring-brand-medium/40',
+                            'data-validate-invalid-class': 'border-danger/60 dark:border-danger-subtle focus:border-danger focus:ring-danger-medium/40 dark:focus:ring-danger',
+                            'data-validate-required-message': 'Le mot de passe est obligatoire'
+                        } }) }}
                         {{ include('components/_password_toggle.html.twig', { input_id: form.plainPassword.vars.id }) }}
                     </div>
                     <div class="flex items-center gap-2">
@@ -65,27 +81,39 @@
                         {{ include('components/_password_copy_button.html.twig', { input_id: form.plainPassword.vars.id }) }}
                     </div>
                 </div>
-                {{ form_errors(form.plainPassword) }}
+                <div id="{{ password_error_id }}" data-validate-error class="mt-1 text-xs text-danger dark:text-fg-danger-strong{% if not password_has_error %} hidden{% endif %}">{{ form_errors(form.plainPassword) }}</div>
                 <div class="mt-4 rounded-base border border-default bg-neutral-primary-soft p-4">
                     {{ include('components/_password_requirements.html.twig', { input_id: form.plainPassword.vars.id }) }}
                 </div>
             </div>
-            <div>
-                {{ form_label(form.mobilePhone, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.mobilePhone, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40', placeholder: '06 12 34 56 78', 'data-phone-mask': true } }) }}
-                {{ form_errors(form.mobilePhone) }}
-            </div>
-            <div>
-                {{ form_label(form.fixedPhone, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.fixedPhone, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40', placeholder: '01 23 45 67 89', 'data-phone-mask': true } }) }}
-                {{ form_errors(form.fixedPhone) }}
-            </div>
-            <div class="md:col-span-2">
-                {{ form_label(form.roleEntities, null, { label_attr: { class: 'mb-3 block text-sm font-medium text-heading' } }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.mobilePhone,
+                input_attr: {
+                    placeholder: '06 12 34 56 78',
+                    'data-phone-mask': true
+                }
+            }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.fixedPhone,
+                input_attr: {
+                    placeholder: '01 23 45 67 89',
+                    'data-phone-mask': true
+                }
+            }) }}
+            <div class="md:col-span-2" data-validate-field data-validate-group="checkboxes" data-validate-required-message="Au moins un rôle est obligatoire">
+                {% set roles_has_error = form.roleEntities.vars.errors|length > 0 %}
+                {{ form_label(form.roleEntities, null, { label_attr: {
+                    class: 'mb-3 block text-sm font-medium ' ~ (roles_has_error ? 'text-danger dark:text-fg-danger-strong' : 'text-heading'),
+                    'data-validate-label': 'true',
+                    'data-validate-valid-class': 'text-heading',
+                    'data-validate-invalid-class': 'text-danger dark:text-fg-danger-strong'
+                } }) }}
                 <div class="grid gap-3 sm:grid-cols-2">
                     {{ form_widget(form.roleEntities, { attr: { class: 'space-y-2' } }) }}
                 </div>
-                {{ form_errors(form.roleEntities) }}
+                <div data-validate-error class="mt-2 text-xs text-danger dark:text-fg-danger-strong{% if not roles_has_error %} hidden{% endif %}">
+                    {{ form_errors(form.roleEntities) }}
+                </div>
             </div>
             <div class="md:col-span-2">
                 <label class="inline-flex items-center cursor-pointer">

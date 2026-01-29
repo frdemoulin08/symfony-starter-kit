@@ -43,12 +43,36 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
+                'constraints' => [
+                    new Assert\NotBlank(
+                        message: 'Le prénom est obligatoire'
+                    ),
+                ],
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom',
+                'constraints' => [
+                    new Assert\NotBlank(
+                        message: 'Le nom est obligatoire'
+                    ),
+                ],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
+                'constraints' => [
+                    new Assert\NotBlank(
+                        message: 'L’email est obligatoire'
+                    ),
+                    new Assert\Sequentially([
+                        new Assert\Email(
+                            message: 'Le format de l’email est invalide'
+                        ),
+                        new Assert\Regex(
+                            pattern: '/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/',
+                            message: 'Le format de l’email est invalide'
+                        ),
+                    ]),
+                ],
             ])
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe',
@@ -56,24 +80,24 @@ class UserType extends AbstractType
                 'required' => (bool) $options['require_password'],
                 'constraints' => [
                     new Assert\NotBlank(
-                        message: 'Le mot de passe est obligatoire.',
+                        message: 'Le mot de passe est obligatoire',
                         groups: ['password']
                     ),
                     new Assert\Length(
                         min: 12,
                         max: 64,
-                        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
-                        maxMessage: 'Le mot de passe ne peut pas dépasser {{ limit }} caractères.',
+                        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères',
+                        maxMessage: 'Le mot de passe ne peut pas dépasser {{ limit }} caractères',
                         groups: ['password']
                     ),
                     new Assert\Regex(
-                        pattern: '/^[A-Za-z0-9!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]^_{|}~`€£¥§¤]+$/u',
-                        message: 'Le mot de passe contient des caractères non autorisés.',
+                        pattern: '/^[A-Za-z0-9!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]\\\\^_{|}~`€£¥§¤]+$/u',
+                        message: 'Le mot de passe contient des caractères non autorisés',
                         groups: ['password']
                     ),
                     new Assert\Regex(
-                        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]^_{|}~`€£¥§¤]).+$/u',
-                        message: 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.',
+                        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]\\\\^_{|}~`€£¥§¤]).+$/u',
+                        message: 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial',
                         groups: ['password']
                     ),
                 ],
@@ -95,7 +119,13 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'by_reference' => false,
-                'required' => false,
+                'required' => true,
+                'constraints' => [
+                    new Assert\Count(
+                        min: 1,
+                        minMessage: 'Au moins un rôle est obligatoire'
+                    ),
+                ],
             ])
             ->add('isActive', CheckboxType::class, [
                 'label' => 'Compte actif',

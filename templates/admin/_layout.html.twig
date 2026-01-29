@@ -25,8 +25,8 @@
                     <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand">Gestion</p>
                     <ul class="space-y-0">
                         <li>
-                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'sites' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_sites_index') }}">
-                                <span>Sites</span>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
+                                <span>Devis et conventions</span>
                             </a>
                         </li>
                         <li>
@@ -35,13 +35,13 @@
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
-                                <span>Usagers</span>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'sites' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_sites_index') }}">
+                                <span>Sites</span>
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
-                                <span>Devis et conventions</span>
+                                <span>Usagers</span>
                             </a>
                         </li>
                     </ul>
@@ -52,6 +52,11 @@
                         <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'authentication_logs' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_authentication_logs_index') }}">
                                 <span>Journaux d’authentification</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'cron_tasks' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_cron_tasks_index') }}">
+                                <span>Journaux des tâches</span>
                             </a>
                         </li>
                         <li>
@@ -66,17 +71,17 @@
                     <ul class="space-y-0">
                         <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
-                                <span>Tarification</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
                                 <span>Habilitations</span>
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
                                 <span>Rapports</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
+                                <span>Tarification</span>
                             </a>
                         </li>
                     </ul>
@@ -91,12 +96,12 @@
                         </li>
                         <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
-                                <span>Réservations</span>
+                                <span>Plannings</span>
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 text-body hover:bg-neutral-secondary-soft" href="#">
-                                <span>Plannings</span>
+                                <span>Réservations</span>
                             </a>
                         </li>
                     </ul>

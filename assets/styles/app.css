@@ -81,6 +81,12 @@
     /* ===== TEXTE BRAND – dark (VERT MOINS CLAIR) ===== */
     --color-fg-brand: oklch(0.80 0.08 190.44);
 
+    /* ===== BRAND – dark (fonds plus visibles) ===== */
+    --color-brand: oklch(0.50 0.10 190.44);
+    --color-brand-strong: oklch(0.44 0.11 190.44);
+    --color-brand-medium: oklch(0.72 0.06 190.44);
+    --color-brand-soft: oklch(0.72 0.06 190.44);
+
     /* ===== PRIMARY – Bleu ===== */
     --color-primary: oklch(0.5461 0.2152 262.88);
     --color-primary-strong: oklch(0.4882 0.2172 264.38);
