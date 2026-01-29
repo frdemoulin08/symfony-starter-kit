@@ -67,12 +67,12 @@ class UserType extends AbstractType
                         groups: ['password']
                     ),
                     new Assert\Regex(
-                        pattern: '/^[A-Za-z0-9!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]^_{|}~`€£¥§¤]+$/u',
+                        pattern: '/^[A-Za-z0-9!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]\\\\^_{|}~`€£¥§¤]+$/u',
                         message: 'Le mot de passe contient des caractères non autorisés.',
                         groups: ['password']
                     ),
                     new Assert\Regex(
-                        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]^_{|}~`€£¥§¤]).+$/u',
+                        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\"#$%&\'()*+,\\-\\.\\/:;<=>\\?@\\[\\]\\\\^_{|}~`€£¥§¤]).+$/u',
                         message: 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.',
                         groups: ['password']
                     ),
