@@ -1,3 +1,18 @@
+## [1.1.2](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.1.1...v1.1.2) (2026-01-29)
+
+
+### Bug Fixes
+
+* correction d'une vulnérabilité liée à semantic-release/npm ([bb41860](https://github.com/frdemoulin08/symfony-starter-kit/commit/bb418600ea089e6440fdb5f9606a8430c0c904d7))
+* debug de la suppression d'un site ([0dbd6f1](https://github.com/frdemoulin08/symfony-starter-kit/commit/0dbd6f151162190b06f61f40a5d9528bd9632403))
+* debug de la suppression d'un site ([f38f70b](https://github.com/frdemoulin08/symfony-starter-kit/commit/f38f70b45048c0f08dc7e614e827d01f254285e5))
+* debug de la validation du champ mot de passe ([703f76d](https://github.com/frdemoulin08/symfony-starter-kit/commit/703f76d15ad63e616bf2fe061b69c8dfcf92fd01))
+* mise en place d'une validation sur le formulaire utilisateurs ([5f88ba4](https://github.com/frdemoulin08/symfony-starter-kit/commit/5f88ba4dedfb3fedfb0313a87fcfdffd2a472b87))
+* mise en place de la gestion des utilisateurs dans le backoffice ([dfea5fb](https://github.com/frdemoulin08/symfony-starter-kit/commit/dfea5fbd6ffce58c334bd215ac0b87f1f01abd76))
+* mise en place des journaux des tâches ([aff95d5](https://github.com/frdemoulin08/symfony-starter-kit/commit/aff95d5f788cb79095bf292db4aacd20c53b5b4a))
+* mise en place des pages d'erreur génériques ([1b30fdc](https://github.com/frdemoulin08/symfony-starter-kit/commit/1b30fdc52dd3521ba389242182330e6f37210cf9))
+* mise en place finale de Flasher ([0276d92](https://github.com/frdemoulin08/symfony-starter-kit/commit/0276d929a2605d675cde1504c0d11f7683b1fe29))
+
 ## [1.1.1](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.1.0...v1.1.1) (2026-01-27)
 
 
