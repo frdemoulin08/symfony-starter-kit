@@ -8,3 +8,5 @@
 - [Sécurité](security/)
 - [Technique](technical/)
 - [CRUD (standard)](technical/crud.md)
+- [Formulaires (UI)](ui/forms.md)
+- [Validation formulaires (technique)](technical/forms-validation.md)

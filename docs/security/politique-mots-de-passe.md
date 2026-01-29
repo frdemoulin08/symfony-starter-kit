@@ -8,6 +8,11 @@ Ce document fixe la politique de complexité des mots de passe et sert de réfé
 - Réinitialisation / changement de mot de passe
 - Toute fonctionnalité future manipulant un mot de passe
 
+## Contexte d'usage
+- Les comptes **métier** (gestionnaires, superviseurs, admins métier) sont créés par l'admin.
+- Les **usagers** définiront eux-mêmes leur mot de passe lors de leur création de compte.
+  - Cette politique s'applique dans les deux cas.
+
 ## Règles obligatoires
 1) **Longueur**
 - Entre **12 et 64 caractères**.

@@ -28,6 +28,12 @@ export const initPasswordToggle = () => {
 
         setButtonState(button, input.type === 'text');
 
+        button.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse' || event.pointerType === 'touch') {
+                event.preventDefault();
+            }
+        });
+
         button.addEventListener('click', () => {
             const isVisible = input.type === 'text';
             input.type = isVisible ? 'password' : 'text';

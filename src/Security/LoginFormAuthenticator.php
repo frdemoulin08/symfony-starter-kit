@@ -5,6 +5,7 @@ namespace App\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
@@ -28,7 +29,20 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $password = (string) $request->request->get('password', '');
         $csrfToken = (string) $request->request->get('_csrf_token', '');
 
+        $email = trim($email);
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+
+        if ($email === '') {
+            throw new CustomUserMessageAuthenticationException('L’adresse email est obligatoire');
+        }
+
+        if (!preg_match('/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/', $email)) {
+            throw new CustomUserMessageAuthenticationException('Le format de l’email est invalide');
+        }
+
+        if (trim($password) === '') {
+            throw new CustomUserMessageAuthenticationException('Le mot de passe est obligatoire');
+        }
 
         return new Passport(
             new UserBadge($email),
