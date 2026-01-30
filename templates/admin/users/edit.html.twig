@@ -32,19 +32,19 @@
         {{ form_start(form, { attr: { class: 'grid gap-6 md:grid-cols-2', novalidate: 'novalidate', 'data-validate-form': 'true' } }) }}
             {{ include('components/_form_field.html.twig', {
                 field: form.firstname,
-                required_message: 'Le prénom est obligatoire'
+                required_message: 'user.firstname.required'|trans({}, 'validators')
             }) }}
             {{ include('components/_form_field.html.twig', {
                 field: form.lastname,
-                required_message: 'Le nom est obligatoire'
+                required_message: 'user.lastname.required'|trans({}, 'validators')
             }) }}
             {{ include('components/_form_field.html.twig', {
                 field: form.email,
                 wrapper_class: 'md:col-span-2',
-                required_message: 'L’email est obligatoire',
-                email_message: 'Le format de l’email est invalide',
+                required_message: 'user.email.required'|trans({}, 'validators'),
+                email_message: 'user.email.invalid'|trans({}, 'validators'),
                 pattern: '^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$',
-                pattern_message: 'Le format de l’email est invalide'
+                pattern_message: 'user.email.invalid'|trans({}, 'validators')
             }) }}
             <div class="md:col-span-2" data-validate-field>
                 {% set password_has_error = form.plainPassword.vars.errors|length > 0 %}
@@ -65,7 +65,7 @@
                             'data-validate-input': 'true',
                             'data-validate-valid-class': 'border-default focus:border-brand-medium focus:ring-brand-medium/40',
                             'data-validate-invalid-class': 'border-danger/60 dark:border-danger-subtle focus:border-danger focus:ring-danger-medium/40 dark:focus:ring-danger',
-                            'data-validate-required-message': 'Le mot de passe est obligatoire'
+                            'data-validate-required-message': 'user.password.required'|trans({}, 'validators')
                         } }) }}
                         {{ include('components/_password_toggle.html.twig', { input_id: form.plainPassword.vars.id }) }}
                     </div>
@@ -100,7 +100,7 @@
                     'data-phone-mask': true
                 }
             }) }}
-            <div class="md:col-span-2" data-validate-field data-validate-group="checkboxes" data-validate-required-message="Au moins un rôle est obligatoire">
+            <div class="md:col-span-2" data-validate-field data-validate-group="checkboxes" data-validate-required-message="{{ 'user.roles.required'|trans({}, 'validators') }}">
                 {% set roles_has_error = form.roleEntities.vars.errors|length > 0 %}
                 {{ form_label(form.roleEntities, null, { label_attr: {
                     class: 'mb-3 block text-sm font-medium ' ~ (roles_has_error ? 'text-danger dark:text-fg-danger-strong' : 'text-heading'),
@@ -111,7 +111,7 @@
                 <div class="grid gap-3 sm:grid-cols-2">
                     {{ form_widget(form.roleEntities, { attr: { class: 'space-y-2' } }) }}
                 </div>
-                <div data-validate-error class="mt-2 text-xs text-danger dark:text-fg-danger-strong{% if not roles_has_error %} hidden{% endif %}">
+                <div id="{{ form.roleEntities.vars.id }}-error" data-validate-error class="mt-2 text-xs text-danger dark:text-fg-danger-strong{% if not roles_has_error %} hidden{% endif %}">
                     {{ form_errors(form.roleEntities) }}
                 </div>
             </div>
