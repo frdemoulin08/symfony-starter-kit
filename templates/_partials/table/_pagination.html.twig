@@ -4,11 +4,11 @@
     {% set startIndex = ((pager.currentPage - 1) * pager.maxPerPage) + 1 %}
     {% set endIndex = startIndex + (pager.currentPageResults|length - 1) %}
     {% set endIndex = endIndex > pager.nbResults ? pager.nbResults : endIndex %}
-    <nav class="flex flex-column flex-wrap items-center justify-between p-4 text-sm text-body md:flex-row" aria-label="Table navigation">
-        <span class="mb-4 block w-full text-sm font-normal md:mb-0 md:inline md:w-auto">
+    <nav class="flex flex-col gap-3 p-4 text-sm text-body md:flex-row md:items-center md:justify-between" aria-label="Table navigation">
+        <span class="block w-full text-center text-sm font-normal md:w-auto md:text-left">
             Affichage <span class="font-semibold text-heading">{{ startIndex }}-{{ endIndex }}</span> sur <span class="font-semibold text-heading">{{ pager.nbResults }}</span>
         </span>
-        <ul class="flex -space-x-px text-sm">
+        <ul class="flex w-full flex-wrap items-center justify-center gap-1 text-sm md:w-auto md:justify-start md:gap-0 md:-space-x-px">
             {% if pager.hasPreviousPage %}
                 <li>
                     <a href="{{ path(route, params.toQueryArray()|merge({ page: pager.previousPage })) }}"

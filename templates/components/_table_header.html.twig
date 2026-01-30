@@ -18,8 +18,8 @@ params:
 {% set min_length = min_length|default(3) %}
 {% set actions = actions|default([]) %}
 
-<div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-    <form class="flex w-full flex-1 items-center gap-3 md:w-auto" method="get" action="{{ path(route) }}" data-table-form data-table-target="{{ target }}">
+<div class="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <form class="flex w-full flex-1 flex-col gap-3 sm:flex-row sm:items-center md:w-auto" method="get" action="{{ path(route) }}" data-table-form data-table-target="{{ target }}">
         <label class="sr-only" for="{{ search_id }}">Rechercher</label>
         <div class="relative w-full md:min-w-70">
             <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
@@ -40,8 +40,11 @@ params:
         <input type="hidden" name="direction" value="{{ params ? params.direction : '' }}">
     </form>
     {% if actions is not empty %}
-        <div class="flex flex-wrap gap-2">
+        <div class="flex w-full flex-wrap gap-2 md:w-auto md:justify-end">
             {% for action in actions %}
+                {% set action = action|merge({
+                    extra_class: ((action.extra_class|default('')) ~ ' w-full sm:w-auto')|trim
+                }) %}
                 {{ include('components/_button.html.twig', action) }}
             {% endfor %}
         </div>

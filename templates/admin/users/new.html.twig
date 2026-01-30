@@ -68,16 +68,20 @@
                         } }) }}
                         {{ include('components/_password_toggle.html.twig', { input_id: form.plainPassword.vars.id }) }}
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button type="button"
-                                class="box-border inline-flex items-center rounded-base border border-default bg-neutral-primary-soft px-3 py-1.5 text-xs font-medium leading-5 text-body shadow-xs hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary-soft"
-                                data-password-generate
-                                data-password-target="{{ form.plainPassword.vars.id }}"
-                                data-password-modal-target="password-generate-modal"
-                                data-password-length="16">
-                            Générer
-                        </button>
-                        {{ include('components/_password_copy_button.html.twig', { input_id: form.plainPassword.vars.id }) }}
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="w-full sm:w-auto">
+                            <button type="button"
+                                    class="box-border inline-flex w-full items-center justify-center rounded-base border border-default bg-neutral-primary-soft px-3 py-1.5 text-xs font-medium leading-5 text-body shadow-xs hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary-soft sm:w-auto"
+                                    data-password-generate
+                                    data-password-target="{{ form.plainPassword.vars.id }}"
+                                    data-password-modal-target="password-generate-modal"
+                                    data-password-length="16">
+                                Générer
+                            </button>
+                        </div>
+                        <div class="w-full sm:w-auto">
+                            {{ include('components/_password_copy_button.html.twig', { input_id: form.plainPassword.vars.id }) }}
+                        </div>
                     </div>
                 </div>
                 <div id="{{ password_error_id }}" data-validate-error class="mt-1 text-xs text-danger dark:text-fg-danger-strong{% if not password_has_error %} hidden{% endif %}">{{ form_errors(form.plainPassword) }}</div>
