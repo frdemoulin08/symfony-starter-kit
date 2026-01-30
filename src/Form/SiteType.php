@@ -17,9 +17,11 @@ class SiteType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom du site',
+                'empty_data' => '',
             ])
             ->add('city', TextType::class, [
                 'label' => 'Commune',
+                'empty_data' => '',
             ])
             ->add('address', TextType::class, [
                 'label' => 'Adresse (optionnel)',
