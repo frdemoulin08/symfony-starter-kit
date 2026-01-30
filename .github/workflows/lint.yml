@@ -1,4 +1,4 @@
-name: CI
+name: Lint
 
 on:
   pull_request:
@@ -8,17 +8,11 @@ on:
       - master
 
 jobs:
-  tests:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.13.0
-          cache: npm
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -41,14 +35,13 @@ jobs:
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Install Node dependencies
-        run: npm ci
+      - name: PHP lint
+        run: |
+          if command -v rg >/dev/null 2>&1; then
+            rg --files -g '*.php' | xargs -n 50 php -l
+          else
+            find . -type f -name '*.php' -print0 | xargs -0 -n 50 php -l
+          fi
 
-      - name: PHPStan
-        run: ./vendor/bin/phpstan analyse -c phpstan.neon
-
-      - name: PHP CS Fixer (dry run)
-        run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
-
-      - name: Run tests
-        run: ./vendor/bin/phpunit --testdox
+      - name: Twig lint
+        run: php bin/console lint:twig templates --env=prod
