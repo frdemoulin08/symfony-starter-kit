@@ -4,6 +4,7 @@ namespace App\Tests\Functional;
 
 use App\DataFixtures\CronTaskRunFixtures;
 use App\DataFixtures\RoleFixtures;
+use App\DataFixtures\ResetPasswordLogFixtures;
 use App\DataFixtures\SiteFixtures;
 use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
@@ -42,6 +43,7 @@ abstract class DatabaseWebTestCase extends WebTestCase
         $passwordHasher = self::getContainer()->get(UserPasswordHasherInterface::class);
         $loader->addFixture(new UserFixtures($passwordHasher));
         $loader->addFixture(new CronTaskRunFixtures());
+        $loader->addFixture(new ResetPasswordLogFixtures());
 
         $executor = new ORMExecutor($entityManager, new ORMPurger());
         $executor->execute($loader->getFixtures());

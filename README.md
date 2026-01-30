@@ -70,12 +70,12 @@ php bin/console cache:clear
 ### Dev / Process
 - Versioning : `docs/VERSIONING.md`
 - Epics & user stories : `docs/EPICS.md`
-- Usage JavaScript : `docs/js-usage.md`
-- PHPMyAdmin : `docs/phpmyadmin.md`
+- Usage JavaScript : `docs/technique/js-usage.md`
+- PHPMyAdmin : `docs/technique/phpmyadmin.md`
 - Tâches CRON : `docs/cron.md`
-- Stratégie tableaux : `docs/technical/tableaux/strategie-gestion-tableaux-symfony-flowbite.md`
-- Guide dev tableaux : `docs/technical/tableaux/guide-implementation-tableaux.md`
+- Stratégie tableaux : `docs/technique/tableaux/strategie-gestion-tableaux-symfony-flowbite.md`
+- Guide dev tableaux : `docs/technique/tableaux/guide-implementation-tableaux.md`
 
 ### Sécurité / RGPD
-- Journalisation RGPD : `docs/rgpd-journalisation.md`
-- Politique mots de passe : `docs/security/politique-mots-de-passe.md`
+- Journalisation RGPD : `docs/securite/rgpd-journalisation.md`
+- Politique mots de passe : `docs/securite/politique-mots-de-passe.md`

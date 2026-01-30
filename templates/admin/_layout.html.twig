@@ -55,6 +55,11 @@
                             </a>
                         </li>
                         <li>
+                            <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'reset_password_logs' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_reset_password_logs_index') }}">
+                                <span>Journaux de réinitialisation</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="flex items-center gap-3 rounded-base px-3 py-1.5 {{ active_menu == 'cron_tasks' ? 'bg-neutral-secondary-soft text-heading' : 'text-body hover:bg-neutral-secondary-soft' }}" href="{{ path('app_admin_cron_tasks_index') }}">
                                 <span>Journaux des tâches</span>
                             </a>

@@ -2,7 +2,7 @@
 
 Ce guide décrit **pas à pas** la mise en place d’un tableau backoffice conforme à la stratégie projet (AJAX, Flowbite, server‑side).
 
-> Prérequis : lire `docs/technical/tableaux/strategie-gestion-tableaux-symfony-flowbite.md` et l’annexe technique.
+> Prérequis : lire `docs/technique/tableaux/strategie-gestion-tableaux-symfony-flowbite.md` et l’annexe technique.
 
 ---
 
@@ -140,5 +140,5 @@ Règles en place :
 
 ## Références
 
-- `docs/technical/tableaux/strategie-gestion-tableaux-symfony-flowbite.md`
-- `docs/technical/tableaux/annexe-technique-gestion-tableaux-symfony-flowbite.md`
+- `docs/technique/tableaux/strategie-gestion-tableaux-symfony-flowbite.md`
+- `docs/technique/tableaux/annexe-technique-gestion-tableaux-symfony-flowbite.md`
