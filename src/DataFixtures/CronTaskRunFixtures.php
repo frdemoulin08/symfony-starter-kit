@@ -18,13 +18,13 @@ class CronTaskRunFixtures extends Fixture
             'app:maintenance:ping',
         ];
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $run = new CronTaskRun();
             $command = $commands[array_rand($commands)];
             $run->setCommand($command);
 
             $secondsAgo = random_int(0, 60 * 60 * 24 * 120);
-            $startedAt = $now->sub(new \DateInterval('PT' . $secondsAgo . 'S'));
+            $startedAt = $now->sub(new \DateInterval('PT'.$secondsAgo.'S'));
             $run->setStartedAt($startedAt);
 
             $statusRoll = random_int(1, 100);
@@ -38,7 +38,7 @@ class CronTaskRunFixtures extends Fixture
 
             $run->setStatus($status);
 
-            if ($status === CronTaskRun::STATUS_RUNNING) {
+            if (CronTaskRun::STATUS_RUNNING === $status) {
                 $run->setSummary('Execution en cours.');
                 $run->setContext([
                     'trigger' => 'cron',
@@ -50,22 +50,22 @@ class CronTaskRunFixtures extends Fixture
 
             $durationMs = random_int(120, 8500);
             $durationSeconds = (int) ceil($durationMs / 1000);
-            $finishedAt = $startedAt->add(new \DateInterval('PT' . $durationSeconds . 'S'));
+            $finishedAt = $startedAt->add(new \DateInterval('PT'.$durationSeconds.'S'));
 
             $run->setFinishedAt($finishedAt);
             $run->setDurationMs($durationMs);
-            $run->setExitCode($status === CronTaskRun::STATUS_SUCCESS ? 0 : 1);
+            $run->setExitCode(CronTaskRun::STATUS_SUCCESS === $status ? 0 : 1);
 
-            if ($command === 'app:auth-log:purge') {
+            if ('app:auth-log:purge' === $command) {
                 $days = random_int(180, 365);
-                $deleted = $status === CronTaskRun::STATUS_SUCCESS ? random_int(5, 1400) : 0;
+                $deleted = CronTaskRun::STATUS_SUCCESS === $status ? random_int(5, 1400) : 0;
                 $cutoff = $startedAt->modify(sprintf('-%d days', $days));
-                $summary = $status === CronTaskRun::STATUS_SUCCESS
+                $summary = CronTaskRun::STATUS_SUCCESS === $status
                     ? sprintf('%d entrees supprimees (anterieures a %s).', $deleted, $cutoff->format('Y-m-d'))
                     : 'Erreur lors de la purge des journaux.';
                 $run->setSummary($summary);
-                $run->setOutput($status === CronTaskRun::STATUS_SUCCESS ? $summary : null);
-                $run->setError($status === CronTaskRun::STATUS_FAILED ? 'Database timeout during purge.' : null);
+                $run->setOutput(CronTaskRun::STATUS_SUCCESS === $status ? $summary : null);
+                $run->setError(CronTaskRun::STATUS_FAILED === $status ? 'Database timeout during purge.' : null);
                 $run->setContext([
                     'days' => $days,
                     'dry_run' => false,
@@ -73,12 +73,12 @@ class CronTaskRunFixtures extends Fixture
                     'host' => 'cron-01',
                 ]);
             } else {
-                $summary = $status === CronTaskRun::STATUS_SUCCESS
+                $summary = CronTaskRun::STATUS_SUCCESS === $status
                     ? 'Tache executee avec succes.'
                     : 'Echec lors de l\'execution de la tache.';
                 $run->setSummary($summary);
-                $run->setOutput($status === CronTaskRun::STATUS_SUCCESS ? $summary : null);
-                $run->setError($status === CronTaskRun::STATUS_FAILED ? 'Unexpected failure in task runner.' : null);
+                $run->setOutput(CronTaskRun::STATUS_SUCCESS === $status ? $summary : null);
+                $run->setError(CronTaskRun::STATUS_FAILED === $status ? 'Unexpected failure in task runner.' : null);
                 $run->setContext([
                     'trigger' => 'cron',
                     'host' => 'cron-01',

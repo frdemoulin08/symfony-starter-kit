@@ -22,7 +22,7 @@ class SiteController extends AbstractController
     public function index(
         Request $request,
         SiteRepository $siteRepository,
-        TablePaginator $tablePaginator
+        TablePaginator $tablePaginator,
     ): Response {
         $params = TableParams::fromRequest($request, [
             'sort' => 'updatedAt',

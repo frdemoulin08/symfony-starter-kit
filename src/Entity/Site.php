@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SiteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SiteRepository::class)]
 class Site
@@ -17,9 +18,11 @@ class Site
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'site.name.required')]
     private string $name = '';
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'site.city.required')]
     private string $city = '';
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -95,5 +98,4 @@ class Site
 
         return $this;
     }
-
 }

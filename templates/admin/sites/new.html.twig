@@ -29,32 +29,29 @@
     </div>
 
     <section class="rounded-2xl border border-default bg-neutral-primary-soft p-6 shadow-xs">
-        {{ form_start(form, { attr: { class: 'grid gap-6 md:grid-cols-2' } }) }}
-            <div class="md:col-span-2">
-                {{ form_label(form.name, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.name, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.name) }}
-            </div>
-            <div>
-                {{ form_label(form.city, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.city, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.city) }}
-            </div>
-            <div>
-                {{ form_label(form.status, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.status, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.status) }}
-            </div>
-            <div class="md:col-span-2">
-                {{ form_label(form.address, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.address, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.address) }}
-            </div>
-            <div>
-                {{ form_label(form.capacity, null, { label_attr: { class: 'mb-2 block text-sm font-medium text-heading' } }) }}
-                {{ form_widget(form.capacity, { attr: { class: 'w-full rounded-base border border-default bg-neutral-primary px-3 py-2 text-sm text-heading placeholder:text-body focus:border-brand-medium focus:ring-2 focus:ring-brand-medium/40' } }) }}
-                {{ form_errors(form.capacity) }}
-            </div>
+        {% set name_required_message = 'site.name.required'|trans({}, 'validators') %}
+        {% set city_required_message = 'site.city.required'|trans({}, 'validators') %}
+
+        {{ form_start(form, { attr: { class: 'grid gap-6 md:grid-cols-2', novalidate: 'novalidate', 'data-validate-form': 'true' } }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.name,
+                wrapper_class: 'md:col-span-2',
+                required_message: name_required_message
+            }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.city,
+                required_message: city_required_message
+            }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.status
+            }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.address,
+                wrapper_class: 'md:col-span-2'
+            }) }}
+            {{ include('components/_form_field.html.twig', {
+                field: form.capacity
+            }) }}
             <div class="md:col-span-2 flex items-center justify-end gap-3">
                 {{ include('components/_button.html.twig', {
                     label: 'Annuler',

@@ -20,9 +20,8 @@ class AuthenticationLogController extends AbstractController
     public function index(
         Request $request,
         AuthenticationLogRepository $authenticationLogRepository,
-        TablePaginator $tablePaginator
-    ): Response
-    {
+        TablePaginator $tablePaginator,
+    ): Response {
         $params = TableParams::fromRequest($request, [
             'sort' => 'occurredAt',
             'direction' => 'desc',
