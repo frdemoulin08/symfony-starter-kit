@@ -9,7 +9,7 @@ use Twig\Extension\GlobalsInterface;
 class AppExtension extends AbstractExtension implements GlobalsInterface
 {
     public function __construct(
-        private GitHubVersionService $gitHubVersionService
+        private GitHubVersionService $gitHubVersionService,
     ) {
     }
 

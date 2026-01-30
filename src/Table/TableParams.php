@@ -11,7 +11,7 @@ class TableParams
         public readonly int $perPage,
         public readonly string $sort,
         public readonly string $direction,
-        public readonly array $filters = []
+        public readonly array $filters = [],
     ) {
     }
 
@@ -37,7 +37,7 @@ class TableParams
         $rawDirection = strtolower($rawDirection);
         $direction = in_array($rawDirection, ['asc', 'desc'], true) ? $rawDirection : '';
 
-        if ($sort === '') {
+        if ('' === $sort) {
             $direction = '';
         }
         $filters = $request->query->all('filter');

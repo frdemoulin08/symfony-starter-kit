@@ -23,7 +23,7 @@ class UserRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('u');
 
         $search = trim((string) ($params->filters['q'] ?? ''));
-        if ($search !== '') {
+        if ('' !== $search) {
             $qb
                 ->andWhere('u.firstname LIKE :search OR u.lastname LIKE :search OR u.email LIKE :search OR u.publicIdentifier LIKE :search')
                 ->setParameter('search', '%'.$search.'%');

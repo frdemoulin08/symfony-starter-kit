@@ -11,7 +11,7 @@ class GitHubVersionService
     public function __construct(
         private HttpClientInterface $client,
         private CacheInterface $cache,
-        private string $githubRepo
+        private string $githubRepo,
     ) {
     }
 

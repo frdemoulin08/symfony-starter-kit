@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,13 +19,12 @@ use Symfony\Component\Uid\Ulid;
 #[UniqueEntity(fields: ['publicIdentifier'], message: 'There is already an account with this public identifier')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableEntity;
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     public const ROLE_BUSINESS_ADMIN = 'ROLE_BUSINESS_ADMIN';
     public const ROLE_APP_MANAGER = 'ROLE_APP_MANAGER';
     public const ROLE_SUPERVISOR = 'ROLE_SUPERVISOR';
     public const ROLE_USER = 'ROLE_USER';
-
-    use TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

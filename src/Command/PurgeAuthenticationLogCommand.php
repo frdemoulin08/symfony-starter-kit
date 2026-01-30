@@ -47,6 +47,7 @@ class PurgeAuthenticationLogCommand extends Command
             $durationMs = (int) round((microtime(true) - $startedAt) * 1000);
             $this->cronTaskTracker->finishFailure($run, new \RuntimeException('Paramètre --days invalide.'), 'Paramètre --days invalide.', null, Command::INVALID, $durationMs);
             $io->error('Le paramètre --days doit être supérieur ou égal à 1.');
+
             return Command::INVALID;
         }
 
@@ -57,6 +58,7 @@ class PurgeAuthenticationLogCommand extends Command
             $durationMs = (int) round((microtime(true) - $startedAt) * 1000);
             $this->cronTaskTracker->finishSuccess($run, $message, $message, Command::SUCCESS, $durationMs);
             $io->note($message);
+
             return Command::SUCCESS;
         }
 
@@ -70,6 +72,7 @@ class PurgeAuthenticationLogCommand extends Command
             $durationMs = (int) round((microtime(true) - $startedAt) * 1000);
             $this->cronTaskTracker->finishFailure($run, $exception, 'Erreur lors de la purge des journaux.', null, Command::FAILURE, $durationMs);
             $io->error('Une erreur est survenue pendant la purge.');
+
             return Command::FAILURE;
         }
 

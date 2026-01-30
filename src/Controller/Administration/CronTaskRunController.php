@@ -20,7 +20,7 @@ class CronTaskRunController extends AbstractController
     public function index(
         Request $request,
         CronTaskRunRepository $cronTaskRunRepository,
-        TablePaginator $tablePaginator
+        TablePaginator $tablePaginator,
     ): Response {
         $params = TableParams::fromRequest($request, [
             'sort' => 'startedAt',

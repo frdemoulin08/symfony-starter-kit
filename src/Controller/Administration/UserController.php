@@ -7,15 +7,15 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Table\TablePaginator;
 use App\Table\TableParams;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/administration/utilisateurs', name: 'app_admin_users_')]
 #[IsGranted(new Expression('is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_BUSINESS_ADMIN") or is_granted("ROLE_APP_MANAGER")'))]
@@ -25,9 +25,8 @@ class UserController extends AbstractController
     public function index(
         Request $request,
         UserRepository $userRepository,
-        TablePaginator $tablePaginator
-    ): Response
-    {
+        TablePaginator $tablePaginator,
+    ): Response {
         $params = TableParams::fromRequest($request, [
             'sort' => 'updatedAt',
             'direction' => 'desc',
@@ -54,9 +53,8 @@ class UserController extends AbstractController
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher
-    ): Response
-    {
+        UserPasswordHasherInterface $passwordHasher,
+    ): Response {
         $user = new User();
         $form = $this->createForm(UserType::class, $user, [
             'require_password' => true,
@@ -66,7 +64,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $plainPassword = (string) $form->get('plainPassword')->getData();
-            if ($plainPassword !== '') {
+            if ('' !== $plainPassword) {
                 $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
             }
 
@@ -96,16 +94,15 @@ class UserController extends AbstractController
         Request $request,
         User $user,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher
-    ): Response
-    {
+        UserPasswordHasherInterface $passwordHasher,
+    ): Response {
         $form = $this->createForm(UserType::class, $user, [
             'require_password' => false,
             'validation_groups' => static function (FormInterface $form): array {
                 $groups = ['Default'];
                 $plainPassword = (string) $form->get('plainPassword')->getData();
 
-                if ($plainPassword !== '') {
+                if ('' !== $plainPassword) {
                     $groups[] = 'password';
                 }
 
@@ -116,7 +113,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $plainPassword = (string) $form->get('plainPassword')->getData();
-            if ($plainPassword !== '') {
+            if ('' !== $plainPassword) {
                 $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
             }
 

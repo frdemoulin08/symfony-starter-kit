@@ -23,7 +23,7 @@ class CronTaskRunRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('run');
 
         $search = trim((string) ($params->filters['q'] ?? ''));
-        if ($search !== '') {
+        if ('' !== $search) {
             $qb
                 ->andWhere('run.command LIKE :search OR run.status LIKE :search OR run.summary LIKE :search')
                 ->setParameter('search', '%'.$search.'%');

@@ -56,14 +56,14 @@ class AuthenticationLogSubscriber implements EventSubscriberInterface
         $identifier = mb_strtolower((string) $request->request->get('email', ''));
 
         $log = new AuthenticationLog();
-        $log->setIdentifier($identifier !== '' ? $identifier : 'inconnu');
+        $log->setIdentifier('' !== $identifier ? $identifier : 'inconnu');
         $log->setEventType(AuthenticationLog::EVENT_LOGIN_FAILURE);
         $log->setIpAddress($request->getClientIp());
         $log->setUserAgent($request->headers->get('User-Agent'));
         $log->setFailureReason($this->extractFailureReason($event->getException()));
 
         $passport = $event->getPassport();
-        if ($passport !== null) {
+        if (null !== $passport) {
             $user = $passport->getUser();
             if ($user instanceof User) {
                 $log->setUser($user);

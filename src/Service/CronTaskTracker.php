@@ -17,7 +17,7 @@ class CronTaskTracker
         $run = new CronTaskRun();
         $run->setCommand($command);
         $run->setStatus(CronTaskRun::STATUS_RUNNING);
-        if ($context !== []) {
+        if ([] !== $context) {
             $run->setContext($context);
         }
 
@@ -32,7 +32,7 @@ class CronTaskTracker
         ?string $summary = null,
         ?string $output = null,
         ?int $exitCode = 0,
-        ?int $durationMs = null
+        ?int $durationMs = null,
     ): void {
         $this->finish($run, CronTaskRun::STATUS_SUCCESS, $summary, $output, null, $exitCode, $durationMs);
     }
@@ -43,9 +43,9 @@ class CronTaskTracker
         ?string $summary = null,
         ?string $output = null,
         ?int $exitCode = 1,
-        ?int $durationMs = null
+        ?int $durationMs = null,
     ): void {
-        $error = trim($exception->getMessage() . "\n" . $exception->getTraceAsString());
+        $error = trim($exception->getMessage()."\n".$exception->getTraceAsString());
         $this->finish($run, CronTaskRun::STATUS_FAILED, $summary, $output, $error, $exitCode, $durationMs);
     }
 
@@ -56,7 +56,7 @@ class CronTaskTracker
         ?string $output,
         ?string $error,
         ?int $exitCode,
-        ?int $durationMs
+        ?int $durationMs,
     ): void {
         $run->setStatus($status);
         $run->setFinishedAt(new \DateTimeImmutable());
@@ -71,7 +71,7 @@ class CronTaskTracker
 
     private function truncate(?string $value, int $maxLength): ?string
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
@@ -79,6 +79,6 @@ class CronTaskTracker
             return $value;
         }
 
-        return mb_substr($value, 0, $maxLength - 3) . '...';
+        return mb_substr($value, 0, $maxLength - 3).'...';
     }
 }

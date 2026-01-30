@@ -29,7 +29,8 @@ class GitHubVersionServiceTest extends TestCase
     {
         $calls = 0;
         $client = new MockHttpClient(function () use (&$calls) {
-            $calls++;
+            ++$calls;
+
             return new MockResponse(json_encode([
                 ['name' => 'v1.0.0'],
             ], JSON_THROW_ON_ERROR));

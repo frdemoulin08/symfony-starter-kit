@@ -10,8 +10,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +21,7 @@ class UserType extends AbstractType
 {
     public function __construct(
         private readonly RoleRepository $roleRepository,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -144,12 +144,12 @@ class UserType extends AbstractType
     private function resolveRoleLabel(Role $role): string
     {
         $code = (string) $role->getCode();
-        $translated = $this->translator->trans('roles.' . $code, [], 'messages');
+        $translated = $this->translator->trans('roles.'.$code, [], 'messages');
 
-        if ($translated === 'roles.' . $code) {
+        if ($translated === 'roles.'.$code) {
             $fallback = $role->getLabel();
 
-            return $fallback !== null && $fallback !== '' ? $fallback : $code;
+            return null !== $fallback && '' !== $fallback ? $fallback : $code;
         }
 
         return $translated;

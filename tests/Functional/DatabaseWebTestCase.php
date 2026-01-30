@@ -3,8 +3,8 @@
 namespace App\Tests\Functional;
 
 use App\DataFixtures\CronTaskRunFixtures;
-use App\DataFixtures\RoleFixtures;
 use App\DataFixtures\ResetPasswordLogFixtures;
+use App\DataFixtures\RoleFixtures;
 use App\DataFixtures\SiteFixtures;
 use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
@@ -12,9 +12,9 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 abstract class DatabaseWebTestCase extends WebTestCase
 {

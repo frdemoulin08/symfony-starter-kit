@@ -2,8 +2,8 @@
 
 namespace App\Tests\Functional\Administration;
 
-use App\Tests\Functional\DatabaseWebTestCase;
 use App\Repository\RoleRepository;
+use App\Tests\Functional\DatabaseWebTestCase;
 
 class UserValidationTest extends DatabaseWebTestCase
 {
