@@ -1,3 +1,14 @@
+## [1.1.3](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.1.2...v1.1.3) (2026-01-30)
+
+
+### Bug Fixes
+
+* amélioration de la sécurité du reset password ([e195404](https://github.com/frdemoulin08/symfony-starter-kit/commit/e195404b5b063ff474355ec8fc450ffd02cff878))
+* corrections suite à PHP-CS-FIXER ([a53a565](https://github.com/frdemoulin08/symfony-starter-kit/commit/a53a565801adcd36217a998c19130a72b1ff5fc6))
+* gestion responsive du design ([7e190f7](https://github.com/frdemoulin08/symfony-starter-kit/commit/7e190f75df3a78ab35cf4c0b76679d99bc453115))
+* mise en place de tests socle ([697bca8](https://github.com/frdemoulin08/symfony-starter-kit/commit/697bca861432ca649affaa1780f05b73898f44ae))
+* mise en place des CI ([50ed8cd](https://github.com/frdemoulin08/symfony-starter-kit/commit/50ed8cdaed7027fe2a6a25e1541412e7e1cf74ae))
+
 ## [1.1.2](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.1.1...v1.1.2) (2026-01-29)
 
 
