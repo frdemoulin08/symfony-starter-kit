@@ -2,8 +2,8 @@
 
 namespace App\Controller\Security;
 
-use App\Entity\ResetPasswordRequest;
 use App\Entity\ResetPasswordLog;
+use App\Entity\ResetPasswordRequest;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
@@ -27,7 +27,7 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     public function __construct(
-        #[Autowire('%app.mailer_from%')] private readonly string $mailerFrom
+        #[Autowire('%app.mailer_from%')] private readonly string $mailerFrom,
     ) {
     }
 
@@ -38,9 +38,8 @@ class ResetPasswordController extends AbstractController
         EntityManagerInterface $entityManager,
         MailerInterface $mailer,
         #[Autowire(service: 'limiter.password_reset_ip')] RateLimiterFactory $passwordResetLimiterIp,
-        #[Autowire(service: 'limiter.password_reset_email')] RateLimiterFactory $passwordResetLimiterEmail
-    ): Response
-    {
+        #[Autowire(service: 'limiter.password_reset_email')] RateLimiterFactory $passwordResetLimiterEmail,
+    ): Response {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
@@ -91,9 +90,8 @@ class ResetPasswordController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager,
         TokenStorageInterface $tokenStorage,
-        string $token
-    ): Response
-    {
+        string $token,
+    ): Response {
         try {
             /** @var User $user */
             $user = $resetPasswordHelper->validateTokenAndFetchUser($token);
@@ -184,7 +182,7 @@ class ResetPasswordController extends AbstractController
         ?User $user,
         string $identifier,
         Request $request,
-        ?string $failureReason = null
+        ?string $failureReason = null,
     ): void {
         $log = new ResetPasswordLog();
         $log->setEventType($eventType);

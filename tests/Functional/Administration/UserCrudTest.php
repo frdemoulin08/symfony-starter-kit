@@ -2,8 +2,8 @@
 
 namespace App\Tests\Functional\Administration;
 
-use App\Repository\UserRepository;
 use App\Repository\RoleRepository;
+use App\Repository\UserRepository;
 use App\Tests\Functional\DatabaseWebTestCase;
 
 class UserCrudTest extends DatabaseWebTestCase
@@ -14,7 +14,7 @@ class UserCrudTest extends DatabaseWebTestCase
         $preferredRole = $roleRepository->findOneBy(['code' => 'ROLE_SUPER_ADMIN']);
         $preferredId = $preferredRole?->getId();
 
-        if ($preferredId === null) {
+        if (null === $preferredId) {
             $fallback = $roleRepository->findOneBy([]);
             $preferredId = $fallback?->getId();
         }
@@ -62,13 +62,13 @@ class UserCrudTest extends DatabaseWebTestCase
 
         self::assertNotNull($user, 'Utilisateur de test introuvable.');
 
-        $crawler = $client->request('GET', '/administration/utilisateurs/' . $user->getId() . '/edition');
+        $crawler = $client->request('GET', '/administration/utilisateurs/'.$user->getId().'/edition');
         self::assertResponseIsSuccessful();
 
         $csrfToken = (string) $crawler->filter('input[name="user[_token]"]')->attr('value');
         $roleId = $this->resolveRoleId();
 
-        $client->request('POST', '/administration/utilisateurs/' . $user->getId() . '/edition', [
+        $client->request('POST', '/administration/utilisateurs/'.$user->getId().'/edition', [
             'user' => [
                 'firstname' => 'Frederic',
                 'lastname' => 'Demoulin',

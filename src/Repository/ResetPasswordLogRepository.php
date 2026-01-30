@@ -25,7 +25,7 @@ class ResetPasswordLogRepository extends ServiceEntityRepository
             ->addSelect('u');
 
         $search = trim((string) ($params->filters['q'] ?? ''));
-        if ($search !== '') {
+        if ('' !== $search) {
             $qb
                 ->andWhere(
                     'log.identifier LIKE :search

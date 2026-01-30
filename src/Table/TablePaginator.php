@@ -15,14 +15,14 @@ class TablePaginator
         QueryBuilder $qb,
         TableParams $params,
         array $allowedSorts,
-        string $alias = 'e'
+        string $alias = 'e',
     ): Pagerfanta {
-        if ($params->sort !== '') {
+        if ('' !== $params->sort) {
             $sort = in_array($params->sort, $allowedSorts, true)
                 ? $params->sort
                 : $allowedSorts[0];
 
-            $direction = $params->direction === 'asc' ? 'asc' : 'desc';
+            $direction = 'asc' === $params->direction ? 'asc' : 'desc';
             $qb->orderBy(sprintf('%s.%s', $alias, $sort), $direction);
         }
 

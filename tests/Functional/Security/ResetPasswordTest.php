@@ -2,8 +2,8 @@
 
 namespace App\Tests\Functional\Security;
 
-use App\Repository\UserRepository;
 use App\Repository\ResetPasswordLogRepository;
+use App\Repository\UserRepository;
 use App\Tests\Functional\DatabaseWebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
@@ -72,7 +72,7 @@ class ResetPasswordTest extends DatabaseWebTestCase
         $resetHelper = $container->get(ResetPasswordHelperInterface::class);
         $resetToken = $resetHelper->generateResetToken($user);
 
-        $client->request('GET', '/reinitialiser-mot-de-passe/' . $resetToken->getToken());
+        $client->request('GET', '/reinitialiser-mot-de-passe/'.$resetToken->getToken());
         $this->assertResponseIsSuccessful();
 
         $newPassword = 'Resetpass1234!';
@@ -102,7 +102,7 @@ class ResetPasswordTest extends DatabaseWebTestCase
         $resetHelper = $container->get(ResetPasswordHelperInterface::class);
         $resetToken = $resetHelper->generateResetToken($user);
 
-        $client->request('GET', '/reinitialiser-mot-de-passe/' . $resetToken->getToken());
+        $client->request('GET', '/reinitialiser-mot-de-passe/'.$resetToken->getToken());
         $form = $client->getCrawler()->selectButton('Mettre à jour le mot de passe')->form([
             'change_password_form[plainPassword]' => 'Resetpass1234!',
         ]);

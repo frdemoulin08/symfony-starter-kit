@@ -114,7 +114,7 @@
             </nav>
         </aside>
 
-        <div class="lg:pl-64">
+        <div class="lg:pl-64 min-h-screen flex flex-col">
             <header class="sticky top-0 z-30 border-b border-default bg-neutral-primary/90 backdrop-blur">
                 <div class="flex flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
                     <button class="inline-flex items-center justify-center rounded-base border border-default bg-neutral-primary-soft p-2 text-heading hover:bg-neutral-secondary-soft lg:hidden" type="button" data-drawer-target="admin-sidebar" data-drawer-toggle="admin-sidebar" aria-controls="admin-sidebar">
@@ -207,10 +207,12 @@
                 </div>
             </header>
 
-            <main class="px-4 py-8 sm:px-6">
+            <main class="flex-1 px-4 py-8 sm:px-6">
                 {% block admin_breadcrumb %}{% endblock %}
                 {% block admin_content %}{% endblock %}
             </main>
+
+            {{ include('admin/_footer.html.twig') }}
         </div>
     </div>
 {% endblock %}

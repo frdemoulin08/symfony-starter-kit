@@ -23,7 +23,7 @@ class SiteRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s');
 
         $search = trim((string) ($params->filters['q'] ?? ''));
-        if ($search !== '') {
+        if ('' !== $search) {
             $qb
                 ->andWhere('s.name LIKE :search OR s.city LIKE :search')
                 ->setParameter('search', '%'.$search.'%');

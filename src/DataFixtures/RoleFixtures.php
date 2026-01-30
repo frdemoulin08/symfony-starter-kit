@@ -55,7 +55,7 @@ class RoleFixtures extends Fixture
         string $code,
         string $label,
         string $description,
-        string $reference
+        string $reference,
     ): void {
         $role = new Role();
         $role->setCode($code);

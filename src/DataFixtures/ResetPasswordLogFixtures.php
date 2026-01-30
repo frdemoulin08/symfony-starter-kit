@@ -19,22 +19,22 @@ class ResetPasswordLogFixtures extends Fixture
 
         $user = $manager->getRepository(User::class)->findOneBy(['email' => 'frederic.demoulin@cd08.fr']);
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $event = $events[array_rand($events)];
             $log = new ResetPasswordLog();
             $log->setEventType($event);
 
-            if ($i % 3 !== 0 && $user instanceof User) {
+            if (0 !== $i % 3 && $user instanceof User) {
                 $log->setUser($user);
                 $log->setIdentifier($user->getEmail() ?? 'admin@example.com');
             } else {
-                $log->setIdentifier('unknown.user' . $i . '@example.com');
+                $log->setIdentifier('unknown.user'.$i.'@example.com');
             }
 
-            $log->setIpAddress('192.0.2.' . (($i % 200) + 1));
+            $log->setIpAddress('192.0.2.'.(($i % 200) + 1));
             $log->setUserAgent('Mozilla/5.0 (FixtureBot) ResetPassword');
 
-            if ($event === ResetPasswordLog::EVENT_RESET_INVALID) {
+            if (ResetPasswordLog::EVENT_RESET_INVALID === $event) {
                 $log->setFailureReason('invalid_or_expired_token');
             }
 

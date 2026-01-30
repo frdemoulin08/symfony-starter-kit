@@ -20,7 +20,7 @@ class ResetPasswordLogController extends AbstractController
     public function index(
         Request $request,
         ResetPasswordLogRepository $resetPasswordLogRepository,
-        TablePaginator $tablePaginator
+        TablePaginator $tablePaginator,
     ): Response {
         $params = TableParams::fromRequest($request, [
             'sort' => 'occurredAt',
