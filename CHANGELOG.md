@@ -1,3 +1,13 @@
+## [1.1.4](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.1.3...v1.1.4) (2026-01-31)
+
+
+### Bug Fixes
+
+* correctifs suite au lint Twig et PHP ([0fd0f2c](https://github.com/frdemoulin08/symfony-starter-kit/commit/0fd0f2c50f14d2e9b88c04a88a1514d5495dbbad))
+* debug des CI ([9c7d39c](https://github.com/frdemoulin08/symfony-starter-kit/commit/9c7d39cd435e74a6e75b58701e20d805740011a4))
+* debug PHP-CS-FIXER ([775b8fd](https://github.com/frdemoulin08/symfony-starter-kit/commit/775b8fd66ae259d7c718f93ba1097ae56ae4e58d))
+* mise en place des headers de sécurité ([91b74d6](https://github.com/frdemoulin08/symfony-starter-kit/commit/91b74d6148ccb6585112295d9d481816f67bf511))
+
 ## [1.1.3](https://github.com/frdemoulin08/symfony-starter-kit/compare/v1.1.2...v1.1.3) (2026-01-30)
 
 
