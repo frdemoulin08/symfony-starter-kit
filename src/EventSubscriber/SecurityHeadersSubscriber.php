@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SecurityHeadersSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        #[Autowire('%kernel.environment%')] private readonly string $appEnv
+        #[Autowire('%kernel.environment%')] private readonly string $appEnv,
     ) {
     }
 
@@ -42,8 +42,8 @@ class SecurityHeadersSubscriber implements EventSubscriberInterface
                 "font-src 'self' data:",
                 "connect-src 'self'",
                 "object-src 'none'",
-                "upgrade-insecure-requests",
-                "block-all-mixed-content",
+                'upgrade-insecure-requests',
+                'block-all-mixed-content',
             ]);
 
             $response->headers->set('Content-Security-Policy', $csp);
