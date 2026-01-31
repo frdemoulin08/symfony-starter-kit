@@ -48,7 +48,7 @@ jobs:
         run: npm run build
 
       - name: PHPStan
-        run: ./vendor/bin/phpstan analyse -c phpstan.neon
+        run: ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M
 
       - name: PHP CS Fixer (dry run)
         run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no

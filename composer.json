@@ -93,6 +93,17 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "lint:php": "if command -v rg >/dev/null 2>&1; then rg --files -g \"*.php\" | xargs -n 50 php -l; else find . -type f -name \"*.php\" -print0 | xargs -0 -n 50 php -l; fi",
+        "lint:twig": "php bin/console lint:twig templates --env=prod",
+        "lint:phpstan": "./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M",
+        "lint:cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no",
+        "qa": [
+            "@lint:phpstan",
+            "@lint:cs",
+            "@lint:twig",
+            "npm run lint:js",
+            "./vendor/bin/phpunit --testdox"
         ]
     },
     "conflict": {

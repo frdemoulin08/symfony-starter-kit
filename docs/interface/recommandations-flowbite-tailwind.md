@@ -225,4 +225,4 @@ En adoptant cette approche :
 
 ---
 
-**Document recommandé pour `/docs/ui/flowbite-with-tailwind-guidelines.md`.**
+**Document recommandé pour `/docs/interface/recommandations-flowbite-tailwind.md`.**

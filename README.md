@@ -11,19 +11,28 @@ Application de réservation de salles et d’administration (backoffice SPSL), a
 
 ## Mise en route rapide
 
-1) Installer les dépendances PHP
+Quickstart (script) :
 ```
-composer install
+./scripts/init-dev.sh
 ```
 
-2) Installer les dépendances front
+1) Préparer l’environnement
 ```
+cp .env.example .env.local
+```
+
+2) Installer les dépendances (PHP + front)
+```
+composer install
 npm install
 ```
 
-3) Configurer la base (ex. `.env.local`)
+3) Configurer les variables clés (ex. `.env.local`)
 ```
+APP_SECRET=change-me
 DATABASE_URL="mysql://user:pass@127.0.0.1:3306/reservation_salle?serverVersion=8.4.0&charset=utf8mb4"
+MAILER_DSN="smtp://user:pass@localhost:1025"
+MAILER_FROM="no-reply@example.com"
 ```
 
 4) Migrations
@@ -35,6 +44,8 @@ php bin/console doctrine:migrations:migrate
 ```
 php bin/console doctrine:fixtures:load
 ```
+
+Alternative rapide : utiliser le script ci-dessus.
 
 ## Commandes utiles
 
@@ -56,21 +67,25 @@ php bin/console cache:clear
 
 ## Documentation
 
+Index centralisé : `docs/index.md`
+
 ### Tests
-- Index : `docs/testing.md`
-- Guide dev : `docs/testing/guide-debutant.md`
-- Stratégie : `docs/testing/strategie.md`
+- Index : `docs/tests.md`
+- Guide dev : `docs/tests/guide-debutant.md`
+- Stratégie : `docs/tests/strategie.md`
 
 ### UI / Design
-- Couleurs CD08 : `docs/ui/colors.md`
-- Flowbite + Tailwind : `docs/ui/flowbite-tailwind-integration.md`
-- Guidelines Flowbite + Tailwind : `docs/ui/flowbite-with-tailwind-guidelines.md`
-- Icônes Flowbite : `docs/ui/icons.md`
+- Couleurs CD08 : `docs/interface/couleurs.md`
+- Flowbite + Tailwind : `docs/interface/integration-flowbite-tailwind.md`
+- Guidelines Flowbite + Tailwind : `docs/interface/recommandations-flowbite-tailwind.md`
+- Icônes Flowbite : `docs/interface/icones.md`
 
 ### Dev / Process
-- Versioning : `docs/VERSIONING.md`
-- Epics & user stories : `docs/EPICS.md`
-- Usage JavaScript : `docs/technique/js-usage.md`
+- Contribuer : `CONTRIBUTING.md`
+- Versioning : `docs/gestion-versions.md`
+- Epics & user stories : `docs/epics-et-user-stories.md`
+- Conventions : `docs/conventions.md`
+- Usage JavaScript : `docs/technique/usage-javascript.md`
 - PHPMyAdmin : `docs/technique/phpmyadmin.md`
 - Tâches CRON : `docs/cron.md`
 - Stratégie tableaux : `docs/technique/tableaux/strategie-gestion-tableaux-symfony-flowbite.md`
@@ -79,3 +94,4 @@ php bin/console cache:clear
 ### Sécurité / RGPD
 - Journalisation RGPD : `docs/securite/rgpd-journalisation.md`
 - Politique mots de passe : `docs/securite/politique-mots-de-passe.md`
+- En-têtes de sécurité : `docs/securite/en-tetes-securite.md`
