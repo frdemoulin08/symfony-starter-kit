@@ -44,6 +44,9 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Build assets
+        run: npm run build
+
       - name: PHPStan
         run: ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M
 
