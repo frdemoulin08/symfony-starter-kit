@@ -67,3 +67,21 @@ Exemple :
     ...
 </tr>
 ```
+
+### Fichiers d’environnement
+
+- `.env` : valeurs par défaut du projet (commitées).
+- `.env.example` : **template à copier** pour chaque poste/dev/CI (commité).
+- `.env.local` : valeurs locales et **secrets** (non commitées).
+- Les variables essentielles sont : `APP_ENV`, `APP_DEBUG`, `APP_SECRET`, `DATABASE_URL`, `MAILER_DSN`, `MAILER_FROM`.
+- En CI, privilégier des variables d’environnement injectées plutôt que `.env.local`.
+
+### Script d’initialisation (dev)
+
+Un script d’initialisation est disponible pour accélérer la mise en route :
+
+```bash
+./scripts/init-dev.sh
+```
+
+Il installe les dépendances, build les assets, applique les migrations et charge les fixtures (purge DB).

@@ -79,7 +79,7 @@ export const initPasswordCopy = () => {
                 await navigator.clipboard.writeText(input.value);
                 setButtonState(button, 'copied');
                 window.setTimeout(() => setButtonState(button, 'idle'), 1500);
-            } catch (error) {
+            } catch {
                 window.alert("Impossible de copier le mot de passe. Veuillez le copier manuellement.");
             }
         });
