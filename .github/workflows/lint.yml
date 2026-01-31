@@ -19,6 +19,11 @@ jobs:
         with:
           php-version: "8.4"
           extensions: intl
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.13.0
+          cache: npm
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -35,6 +40,9 @@ jobs:
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
+      - name: Install Node dependencies
+        run: npm ci
+
       - name: PHP lint
         run: |
           if command -v rg >/dev/null 2>&1; then
@@ -45,3 +53,6 @@ jobs:
 
       - name: Twig lint
         run: php bin/console lint:twig templates --env=prod
+
+      - name: JS/TS lint
+        run: npm run lint:js

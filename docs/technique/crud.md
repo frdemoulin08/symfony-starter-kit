@@ -56,4 +56,4 @@ framework:
 ## Références
 - Pattern JS : `assets/js/helpers/modal.js`
 - Modale factorisée : `templates/admin/_partials/_delete_modal.html.twig`
-- Guide complet des modales : `docs/ui/delete-modals.md`
+- Guide complet des modales : `docs/interface/modales-suppression.md`

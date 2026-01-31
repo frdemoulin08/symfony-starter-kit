@@ -2,6 +2,8 @@
 
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
+    ->exclude('node_modules')
+    ->exclude('public/build')
     ->exclude('var')
 ;
 
